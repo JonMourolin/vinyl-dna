@@ -5,6 +5,17 @@ All notable changes to DeepCogs will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 2026-01-06
+
+### Fixed
+- Fix recommendations failing on Vercel (timeout issue)
+- Parallelize recommendation searches for faster response
+
+### Added
+- `vercel.json` with 30s function timeout
+
+---
+
 ## [0.2.0] - 2026-01-06
 
 ### Changed
@@ -45,6 +56,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.2.1 | 2026-01-06 | Fix recommendations timeout on Vercel |
 | 0.2.0 | 2026-01-06 | Rename to DeepCogs |
 | 0.1.1 | 2026-01-06 | Fix duplicate OAuth user count |
 | 0.1.0 | 2026-01-06 | Initial release with DNA analyzer, collection compare, and recommendations |
