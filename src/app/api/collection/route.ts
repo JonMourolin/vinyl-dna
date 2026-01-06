@@ -15,6 +15,8 @@ export async function GET(request: NextRequest) {
 
   const searchParams = request.nextUrl.searchParams;
   const username = searchParams.get("username");
+  const page = parseInt(searchParams.get("page") || "1", 10);
+  const perPage = parseInt(searchParams.get("per_page") || "100", 10);
 
   if (!username) {
     return NextResponse.json(
@@ -31,6 +33,7 @@ export async function GET(request: NextRequest) {
 
     let releases;
     let total;
+    let pages;
 
     if (accessToken && accessTokenSecret) {
       // Use authenticated client
@@ -41,42 +44,26 @@ export async function GET(request: NextRequest) {
         accessTokenSecret
       );
 
-      // Fetch first page to get total count
-      const firstPage = await client.getCollection(username, 0, 1, 100);
-      total = firstPage.pagination.items;
-
-      // For now, fetch up to 500 releases (5 pages)
-      // Full collection fetch can be done progressively on client
-      const pagesToFetch = Math.min(Math.ceil(total / 100), 5);
-      releases = [...firstPage.releases];
-
-      for (let page = 2; page <= pagesToFetch; page++) {
-        const pageData = await client.getCollection(username, 0, page, 100);
-        releases.push(...pageData.releases);
-        // Small delay to respect rate limits
-        await new Promise((resolve) => setTimeout(resolve, 100));
-      }
+      const response = await client.getCollection(username, 0, page, perPage);
+      releases = response.releases;
+      total = response.pagination.items;
+      pages = response.pagination.pages;
     } else {
       // Use simple client for public collections
       const client = createSimpleDiscogsClient(consumerKey, consumerSecret);
 
-      const firstPage = await client.getPublicCollection(username, 0, 1, 100);
-      total = firstPage.pagination.items;
-
-      const pagesToFetch = Math.min(Math.ceil(total / 100), 5);
-      releases = [...firstPage.releases];
-
-      for (let page = 2; page <= pagesToFetch; page++) {
-        const pageData = await client.getPublicCollection(username, 0, page, 100);
-        releases.push(...pageData.releases);
-        await new Promise((resolve) => setTimeout(resolve, 100));
-      }
+      const response = await client.getPublicCollection(username, 0, page, perPage);
+      releases = response.releases;
+      total = response.pagination.items;
+      pages = response.pagination.pages;
     }
 
     return NextResponse.json({
       releases,
       total,
-      fetched: releases.length,
+      page,
+      pages,
+      hasMore: page < pages,
     });
   } catch (error) {
     console.error("Collection fetch error:", error);
