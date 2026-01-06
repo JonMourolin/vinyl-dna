@@ -14,6 +14,7 @@ import { Recommendations } from "@/components/recommendations";
 import { DeepCuts } from "@/components/deep-cuts";
 import { DNACard } from "@/components/dna-card";
 import { CountryDistribution } from "@/components/country-distribution";
+import { TradeFinder } from "@/components/trade-finder";
 import Link from "next/link";
 import type { DiscogsRelease } from "@/lib/discogs";
 
@@ -279,6 +280,11 @@ export function DashboardClient({ username }: DashboardClientProps) {
           {/* Compare Tab */}
           <TabsContent value="compare" className="space-y-8">
             <CollectionCompare
+              myUsername={username}
+              myCollection={collection?.releases || []}
+              isLoading={loading}
+            />
+            <TradeFinder
               myUsername={username}
               myCollection={collection?.releases || []}
               isLoading={loading}
