@@ -113,10 +113,10 @@ export function DeepCuts({ releases, isLoading }: DeepCutsProps) {
     return { testPressings, promos, limited };
   }, [scoredReleases]);
 
-  // 5-star rated releases
+  // Top rated releases (above 4.7)
   const fiveStarReleases = useMemo(() => {
     return releases
-      .filter((r) => r.rating === 5)
+      .filter((r) => r.rating > 4.7)
       .sort((a, b) => (b.basic_information.year || 0) - (a.basic_information.year || 0));
   }, [releases]);
 
