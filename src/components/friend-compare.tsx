@@ -43,6 +43,8 @@ interface StyleCompatibility {
   score: number;
   sharedStyles: string[];
   styleComparison: { style: string; myPercent: number; friendPercent: number }[];
+  topOverlaps: { style: string; overlap: number }[];
+  biggestDifferences: { style: string; myPercent: number; friendPercent: number }[];
 }
 
 interface ComparisonResult {
@@ -79,31 +81,48 @@ function calculateStyleCompatibility(
   const friendTotal = friendCollection.length;
 
   // Get all styles from both collections
-  const allStyles = new Set([
+  const allStyles = Array.from(new Set([
     ...Object.keys(myStyles),
     ...Object.keys(friendStyles),
-  ]);
+  ]));
 
-  // Calculate style comparison with percentages
-  const styleData = Array.from(allStyles).map((style) => {
+  // Build vectors for cosine similarity
+  const myVector: number[] = [];
+  const friendVector: number[] = [];
+
+  const styleData = allStyles.map((style) => {
     const myCount = myStyles[style] || 0;
     const friendCount = friendStyles[style] || 0;
     const myPercent = myTotal > 0 ? (myCount / myTotal) * 100 : 0;
     const friendPercent = friendTotal > 0 ? (friendCount / friendTotal) * 100 : 0;
-    // Overlap is the minimum of the two percentages (conservative measure)
-    const overlap = Math.min(myPercent, friendPercent);
 
-    return { style, myPercent, friendPercent, overlap };
+    myVector.push(myPercent);
+    friendVector.push(friendPercent);
+
+    return { style, myPercent, friendPercent };
   });
 
-  // Calculate total compatibility score (sum of overlaps, max 100%)
-  const totalOverlap = styleData.reduce((sum, s) => sum + s.overlap, 0);
-  const score = Math.min(Math.round(totalOverlap), 100);
+  // Calculate cosine similarity: (A·B) / (||A|| × ||B||)
+  let dotProduct = 0;
+  let normA = 0;
+  let normB = 0;
 
-  // Get shared styles (both have >3% presence) sorted by overlap
+  for (let i = 0; i < myVector.length; i++) {
+    dotProduct += myVector[i] * friendVector[i];
+    normA += myVector[i] * myVector[i];
+    normB += friendVector[i] * friendVector[i];
+  }
+
+  const cosineSimilarity = (normA === 0 || normB === 0)
+    ? 0
+    : dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+
+  const score = Math.round(cosineSimilarity * 100);
+
+  // Get shared styles (both have >3% presence)
   const sharedStyles = styleData
     .filter((s) => s.myPercent >= 3 && s.friendPercent >= 3)
-    .sort((a, b) => b.overlap - a.overlap)
+    .sort((a, b) => Math.min(b.myPercent, b.friendPercent) - Math.min(a.myPercent, a.friendPercent))
     .slice(0, 5)
     .map((s) => s.style);
 
@@ -113,7 +132,39 @@ function calculateStyleCompatibility(
     .slice(0, 10)
     .map(({ style, myPercent, friendPercent }) => ({ style, myPercent, friendPercent }));
 
-  return { score, sharedStyles, styleComparison };
+  // Calculate contribution of each style to the similarity
+  // Each style contributes (myPercent * friendPercent) to the dot product
+  const totalContribution = dotProduct;
+  const topOverlaps = styleData
+    .map((s) => ({
+      style: s.style,
+      contribution: s.myPercent * s.friendPercent,
+    }))
+    .filter((s) => s.contribution > 0)
+    .sort((a, b) => b.contribution - a.contribution)
+    .slice(0, 5)
+    .map((s) => ({
+      style: s.style,
+      overlap: totalContribution > 0 ? Math.round((s.contribution / totalContribution) * 100) : 0,
+    }));
+
+  // Find biggest differences (exclude styles already in shared preferences)
+  const sharedStyleNames = new Set(topOverlaps.map((o) => o.style));
+  const biggestDifferences = styleData
+    .map((s) => ({
+      ...s,
+      diff: Math.abs(s.myPercent - s.friendPercent),
+    }))
+    .filter((s) =>
+      s.diff > 3 &&
+      (s.myPercent > 2 || s.friendPercent > 2) &&
+      !sharedStyleNames.has(s.style) // don't show if already in shared preferences
+    )
+    .sort((a, b) => b.diff - a.diff)
+    .slice(0, 3)
+    .map(({ style, myPercent, friendPercent }) => ({ style, myPercent, friendPercent }));
+
+  return { score, sharedStyles, styleComparison, topOverlaps, biggestDifferences };
 }
 
 function ReleaseCard({ release }: { release: DiscogsRelease }) {
@@ -430,27 +481,68 @@ export function FriendCompare({
                   <p className="text-sm text-gray-600">
                     Taste Compatibility
                   </p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    Based on style preferences
-                  </p>
                 </div>
 
-                {/* Shared styles */}
-                {result.styleCompatibility.sharedStyles.length > 0 && (
-                  <div className="mt-4 text-center">
-                    <p className="text-xs text-gray-500 mb-2">You both love</p>
-                    <div className="flex flex-wrap justify-center gap-1.5">
-                      {result.styleCompatibility.sharedStyles.map((style) => (
-                        <span
-                          key={style}
-                          className="px-2.5 py-1 text-xs font-medium rounded-full bg-amber-100 text-amber-800"
-                        >
-                          {style}
-                        </span>
-                      ))}
+                {/* Score explanation */}
+                <div className="mt-4 pt-4 border-t border-amber-200">
+                  <p className="text-xs text-gray-600 mb-2 text-center font-medium">
+                    How it works
+                  </p>
+                  <p className="text-xs text-gray-500 mb-3 leading-relaxed">
+                    Cosine similarity measures the angle between your style vectors.
+                    Think of it as: are you pointing in the same direction in music taste?
+                  </p>
+                  <div className="text-xs text-gray-400 space-y-0.5 mb-4">
+                    <div className="flex justify-between">
+                      <span>~90%+</span>
+                      <span>Nearly identical taste</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>~70%</span>
+                      <span>Similar with different emphasis</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>~40%</span>
+                      <span>Some overlap, different tastes</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>&lt;20%</span>
+                      <span>Very different collections</span>
                     </div>
                   </div>
-                )}
+
+                  {result.styleCompatibility.topOverlaps.length > 0 && (
+                    <>
+                      <p className="text-xs text-gray-600 mb-1 font-medium">Biggest shared preferences:</p>
+                      <div className="text-xs text-gray-500 space-y-0.5 mb-3">
+                        {result.styleCompatibility.topOverlaps.map((o) => (
+                          <div key={o.style} className="flex justify-between">
+                            <span>{o.style}</span>
+                            <span className="text-amber-600">{o.overlap}% of match</span>
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
+
+                  {result.styleCompatibility.biggestDifferences.length > 0 && (
+                    <>
+                      <p className="text-xs text-gray-600 mb-1 font-medium">Biggest differences:</p>
+                      <div className="text-xs text-gray-500 space-y-0.5">
+                        {result.styleCompatibility.biggestDifferences.map((d) => (
+                          <div key={d.style} className="flex justify-between">
+                            <span>{d.style}</span>
+                            <span className="text-gray-400">
+                              <span className="text-amber-600">{d.myPercent.toFixed(0)}%</span>
+                              {" vs "}
+                              <span>{d.friendPercent.toFixed(0)}%</span>
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </div>
               </CardContent>
             </Card>
 
@@ -496,6 +588,17 @@ export function FriendCompare({
               <CardDescription className="text-gray-500 text-xs">
                 How your style preferences compare (% of collection)
               </CardDescription>
+              {/* Legend */}
+              <div className="flex items-center gap-4 mt-2">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-amber-500" />
+                  <span className="text-xs text-gray-600">You</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-gray-400" />
+                  <span className="text-xs text-gray-600">{result.friendUsername}</span>
+                </div>
+              </div>
             </CardHeader>
             <CardContent>
               <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3">
@@ -504,20 +607,22 @@ export function FriendCompare({
                     <div className="flex justify-between text-sm">
                       <span className="font-medium text-gray-900">{s.style}</span>
                       <span className="text-xs text-gray-500">
-                        {s.myPercent.toFixed(0)}% / {s.friendPercent.toFixed(0)}%
+                        <span className="text-amber-600">{s.myPercent.toFixed(0)}%</span>
+                        {" / "}
+                        <span className="text-gray-500">{s.friendPercent.toFixed(0)}%</span>
                       </span>
                     </div>
                     <div className="flex h-1.5 rounded-full overflow-hidden bg-gray-100">
                       <div
                         className="bg-amber-500"
                         style={{
-                          width: `${(s.myPercent / (s.myPercent + s.friendPercent)) * 100}%`,
+                          width: `${(s.myPercent / (s.myPercent + s.friendPercent || 1)) * 100}%`,
                         }}
                       />
                       <div
-                        className="bg-gray-300"
+                        className="bg-gray-400"
                         style={{
-                          width: `${(s.friendPercent / (s.myPercent + s.friendPercent)) * 100}%`,
+                          width: `${(s.friendPercent / (s.myPercent + s.friendPercent || 1)) * 100}%`,
                         }}
                       />
                     </div>
