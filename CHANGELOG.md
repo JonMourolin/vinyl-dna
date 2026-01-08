@@ -5,6 +5,23 @@ All notable changes to DeepCogs will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0] - 2026-01-08
+
+### Changed
+- **Admin-Style Dashboard**: Complete redesign with fixed sidebar navigation
+  - Stat cards at top (Total Releases, Top Genre, Top Decade, Top Label)
+  - Vertical navigation with icons replacing horizontal tabs
+  - Consistent light theme across all components
+- **Elegant Landing Page**: Refined split-screen design
+  - Full-bleed vinyl collection image on left panel
+  - Clean white background with centered login form on right
+  - Serif typography for headings
+
+### Fixed
+- Theme consistency: All dashboard components now use light theme (white cards, gray borders)
+
+---
+
 ## [0.5.0] - 2026-01-07
 
 ### Changed
@@ -112,6 +129,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.6.0 | 2026-01-08 | Admin-style dashboard, elegant landing page |
 | 0.5.0 | 2026-01-07 | Landing page redesign with split-screen layout |
 | 0.4.0 | 2026-01-07 | OG vs Repress detection, merged Oddities into DNA, removed Deep Cuts tab |
 | 0.3.1 | 2026-01-07 | Bidirectional Trade Finder, removed Country Distribution & Progressive Loading |
