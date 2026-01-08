@@ -80,31 +80,48 @@ function calculateStyleCompatibility(
   const friendTotal = friendCollection.length;
 
   // Get all styles from both collections
-  const allStyles = new Set([
+  const allStyles = Array.from(new Set([
     ...Object.keys(myStyles),
     ...Object.keys(friendStyles),
-  ]);
+  ]));
 
-  // Calculate style comparison with percentages
-  const styleData = Array.from(allStyles).map((style) => {
+  // Build vectors for cosine similarity
+  const myVector: number[] = [];
+  const friendVector: number[] = [];
+
+  const styleData = allStyles.map((style) => {
     const myCount = myStyles[style] || 0;
     const friendCount = friendStyles[style] || 0;
     const myPercent = myTotal > 0 ? (myCount / myTotal) * 100 : 0;
     const friendPercent = friendTotal > 0 ? (friendCount / friendTotal) * 100 : 0;
-    // Overlap is the minimum of the two percentages (conservative measure)
-    const overlap = Math.min(myPercent, friendPercent);
 
-    return { style, myPercent, friendPercent, overlap };
+    myVector.push(myPercent);
+    friendVector.push(friendPercent);
+
+    return { style, myPercent, friendPercent };
   });
 
-  // Calculate total compatibility score (sum of overlaps, max 100%)
-  const totalOverlap = styleData.reduce((sum, s) => sum + s.overlap, 0);
-  const score = Math.min(Math.round(totalOverlap), 100);
+  // Calculate cosine similarity: (A·B) / (||A|| × ||B||)
+  let dotProduct = 0;
+  let normA = 0;
+  let normB = 0;
 
-  // Get shared styles (both have >3% presence) sorted by overlap
+  for (let i = 0; i < myVector.length; i++) {
+    dotProduct += myVector[i] * friendVector[i];
+    normA += myVector[i] * myVector[i];
+    normB += friendVector[i] * friendVector[i];
+  }
+
+  const cosineSimilarity = (normA === 0 || normB === 0)
+    ? 0
+    : dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+
+  const score = Math.round(cosineSimilarity * 100);
+
+  // Get shared styles (both have >3% presence)
   const sharedStyles = styleData
     .filter((s) => s.myPercent >= 3 && s.friendPercent >= 3)
-    .sort((a, b) => b.overlap - a.overlap)
+    .sort((a, b) => Math.min(b.myPercent, b.friendPercent) - Math.min(a.myPercent, a.friendPercent))
     .slice(0, 5)
     .map((s) => s.style);
 
@@ -114,12 +131,21 @@ function calculateStyleCompatibility(
     .slice(0, 10)
     .map(({ style, myPercent, friendPercent }) => ({ style, myPercent, friendPercent }));
 
-  // Get top overlaps that contribute most to the score
+  // Calculate contribution of each style to the similarity
+  // Each style contributes (myPercent * friendPercent) to the dot product
+  const totalContribution = dotProduct;
   const topOverlaps = styleData
-    .filter((s) => s.overlap > 0)
-    .sort((a, b) => b.overlap - a.overlap)
+    .map((s) => ({
+      style: s.style,
+      contribution: s.myPercent * s.friendPercent,
+    }))
+    .filter((s) => s.contribution > 0)
+    .sort((a, b) => b.contribution - a.contribution)
     .slice(0, 5)
-    .map(({ style, overlap }) => ({ style, overlap: Math.round(overlap) }));
+    .map((s) => ({
+      style: s.style,
+      overlap: totalContribution > 0 ? Math.round((s.contribution / totalContribution) * 100) : 0,
+    }));
 
   return { score, sharedStyles, styleComparison, topOverlaps };
 }
@@ -444,19 +470,20 @@ export function FriendCompare({
                 {result.styleCompatibility.topOverlaps.length > 0 && (
                   <div className="mt-4 pt-4 border-t border-amber-200">
                     <p className="text-xs text-gray-600 mb-2 text-center">
-                      Top style overlaps (min % of both collections):
+                      Cosine similarity of your style distributions.
                     </p>
-                    <div className="text-xs text-gray-500 space-y-1">
+                    <p className="text-xs text-gray-500 mb-3 text-center">
+                      100% = identical taste, 0% = no overlap
+                    </p>
+                    <p className="text-xs text-gray-500 mb-1">Biggest shared preferences:</p>
+                    <div className="text-xs text-gray-500 space-y-0.5">
                       {result.styleCompatibility.topOverlaps.map((o) => (
                         <div key={o.style} className="flex justify-between">
                           <span>{o.style}</span>
-                          <span className="font-medium text-amber-700">+{o.overlap}%</span>
+                          <span className="text-gray-400">{o.overlap}% of match</span>
                         </div>
                       ))}
                     </div>
-                    <p className="text-xs text-gray-400 mt-2 text-center">
-                      + other styles = {result.styleCompatibility.score}%
-                    </p>
                   </div>
                 )}
               </CardContent>
