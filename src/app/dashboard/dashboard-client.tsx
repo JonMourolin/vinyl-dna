@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DNACharts } from "@/components/dna-charts";
 import { FriendCompare } from "@/components/friend-compare";
 import { Recommendations } from "@/components/recommendations";
@@ -13,6 +13,8 @@ import type { DiscogsRelease } from "@/lib/discogs";
 
 interface DashboardClientProps {
   username: string;
+  avatarUrl?: string;
+  expectedTotal?: number;
 }
 
 interface CollectionData {
@@ -55,9 +57,10 @@ const VinylIcon = () => (
   </svg>
 );
 
-export function DashboardClient({ username }: DashboardClientProps) {
+export function DashboardClient({ username, avatarUrl, expectedTotal }: DashboardClientProps) {
   const [collection, setCollection] = useState<CollectionData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [loadedCount, setLoadedCount] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<TabValue>("dna");
 
@@ -90,6 +93,7 @@ export function DashboardClient({ username }: DashboardClientProps) {
           total = result.total;
           hasMore = result.hasMore;
           currentPageNum = result.page + 1;
+          setLoadedCount(allReleases.length);
         }
 
         setCollection({ releases: allReleases, total });
@@ -130,6 +134,7 @@ export function DashboardClient({ username }: DashboardClientProps) {
         <div className="p-4 border-b border-gray-100">
           <div className="flex items-center gap-3 p-2 rounded-lg bg-gray-50">
             <Avatar className="w-9 h-9">
+              {avatarUrl && <AvatarImage src={avatarUrl} alt={username} />}
               <AvatarFallback className="bg-amber-100 text-amber-700 text-sm font-medium">
                 {username[0].toUpperCase()}
               </AvatarFallback>
@@ -137,7 +142,11 @@ export function DashboardClient({ username }: DashboardClientProps) {
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-gray-900 truncate">{username}</p>
               <p className="text-xs text-gray-500">
-                {loading ? "Loading..." : `${collection?.total || 0} releases`}
+                {loading
+                  ? expectedTotal
+                    ? `Loading ${loadedCount}/${expectedTotal}...`
+                    : `Loading ${loadedCount}...`
+                  : `${collection?.total || 0} releases`}
               </p>
             </div>
           </div>

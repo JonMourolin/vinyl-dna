@@ -14,8 +14,10 @@ export interface DiscogsUser {
   id: number;
   username: string;
   resource_url: string;
-  consumer_name: string;
+  consumer_name?: string;
   avatar_url?: string;
+  num_collection?: number;
+  num_wantlist?: number;
 }
 
 export interface DiscogsRelease {
