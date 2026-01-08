@@ -148,13 +148,18 @@ function calculateStyleCompatibility(
       overlap: totalContribution > 0 ? Math.round((s.contribution / totalContribution) * 100) : 0,
     }));
 
-  // Find biggest differences (one has significantly more than the other)
+  // Find biggest differences (exclude styles already in shared preferences)
+  const sharedStyleNames = new Set(topOverlaps.map((o) => o.style));
   const biggestDifferences = styleData
     .map((s) => ({
       ...s,
       diff: Math.abs(s.myPercent - s.friendPercent),
     }))
-    .filter((s) => s.diff > 3 && (s.myPercent > 2 || s.friendPercent > 2)) // meaningful difference
+    .filter((s) =>
+      s.diff > 3 &&
+      (s.myPercent > 2 || s.friendPercent > 2) &&
+      !sharedStyleNames.has(s.style) // don't show if already in shared preferences
+    )
     .sort((a, b) => b.diff - a.diff)
     .slice(0, 3)
     .map(({ style, myPercent, friendPercent }) => ({ style, myPercent, friendPercent }));
