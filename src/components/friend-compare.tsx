@@ -43,6 +43,7 @@ interface StyleCompatibility {
   score: number;
   sharedStyles: string[];
   styleComparison: { style: string; myPercent: number; friendPercent: number }[];
+  topOverlaps: { style: string; overlap: number }[];
 }
 
 interface ComparisonResult {
@@ -113,7 +114,14 @@ function calculateStyleCompatibility(
     .slice(0, 10)
     .map(({ style, myPercent, friendPercent }) => ({ style, myPercent, friendPercent }));
 
-  return { score, sharedStyles, styleComparison };
+  // Get top overlaps that contribute most to the score
+  const topOverlaps = styleData
+    .filter((s) => s.overlap > 0)
+    .sort((a, b) => b.overlap - a.overlap)
+    .slice(0, 5)
+    .map(({ style, overlap }) => ({ style, overlap: Math.round(overlap) }));
+
+  return { score, sharedStyles, styleComparison, topOverlaps };
 }
 
 function ReleaseCard({ release }: { release: DiscogsRelease }) {
@@ -430,25 +438,25 @@ export function FriendCompare({
                   <p className="text-sm text-gray-600">
                     Taste Compatibility
                   </p>
-                  <p className="text-xs text-gray-500 mt-1">
-                    Higher = more similar style preferences
-                  </p>
                 </div>
 
-                {/* Shared styles */}
-                {result.styleCompatibility.sharedStyles.length > 0 && (
-                  <div className="mt-4 text-center">
-                    <p className="text-xs text-gray-500 mb-2">You both love</p>
-                    <div className="flex flex-wrap justify-center gap-1.5">
-                      {result.styleCompatibility.sharedStyles.map((style) => (
-                        <span
-                          key={style}
-                          className="px-2.5 py-1 text-xs font-medium rounded-full bg-amber-100 text-amber-800"
-                        >
-                          {style}
-                        </span>
+                {/* Score breakdown */}
+                {result.styleCompatibility.topOverlaps.length > 0 && (
+                  <div className="mt-4 pt-4 border-t border-amber-200">
+                    <p className="text-xs text-gray-600 mb-2 text-center">
+                      Top style overlaps (min % of both collections):
+                    </p>
+                    <div className="text-xs text-gray-500 space-y-1">
+                      {result.styleCompatibility.topOverlaps.map((o) => (
+                        <div key={o.style} className="flex justify-between">
+                          <span>{o.style}</span>
+                          <span className="font-medium text-amber-700">+{o.overlap}%</span>
+                        </div>
                       ))}
                     </div>
+                    <p className="text-xs text-gray-400 mt-2 text-center">
+                      + other styles = {result.styleCompatibility.score}%
+                    </p>
                   </div>
                 )}
               </CardContent>
