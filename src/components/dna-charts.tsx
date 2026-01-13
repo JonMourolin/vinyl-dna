@@ -26,16 +26,16 @@ interface DNAChartsProps {
   releases: DiscogsRelease[];
 }
 
-// Light theme color palette
+// Velvet theme color palette (coral/pink tones)
 const COLORS = [
-  "#E67E22", // Orange
-  "#3498DB", // Blue
-  "#2ECC71", // Green
-  "#E74C3C", // Red
-  "#9B59B6", // Purple
-  "#1ABC9C", // Teal
-  "#F39C12", // Yellow
-  "#34495E", // Dark gray
+  "#E8786B", // Coral (primary)
+  "#D4657A", // Rose pink
+  "#B85A7A", // Dusty rose
+  "#9A4F6E", // Mauve
+  "#E89A8B", // Peach
+  "#C76D6D", // Terracotta
+  "#A66B7A", // Muted plum
+  "#7D4F5A", // Dark rose
 ];
 
 // Keywords for oddities detection
@@ -221,7 +221,7 @@ export function DNACharts({ releases }: DNAChartsProps) {
                   />
                   <Bar
                     dataKey="value"
-                    fill="#E67E22"
+                    fill="#E8786B"
                     radius={[0, 4, 4, 0]}
                   />
                 </BarChart>

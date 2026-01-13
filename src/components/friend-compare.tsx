@@ -397,7 +397,7 @@ export function FriendCompare({
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-gray-900">
             <svg
-              className="w-5 h-5 text-amber-600"
+              className="w-5 h-5 text-primary"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -413,7 +413,7 @@ export function FriendCompare({
           </CardTitle>
           <CardDescription className="text-gray-500">
             Enter a Discogs username to compare collections and find trade opportunities.
-            <span className="block mt-1 text-amber-600">
+            <span className="block mt-1 text-primary">
               Note: Their collection and wantlist must be public.
             </span>
           </CardDescription>
@@ -472,10 +472,10 @@ export function FriendCompare({
           {/* Summary Cards */}
           <div className="grid md:grid-cols-2 gap-6">
             {/* Taste Compatibility */}
-            <Card className="bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200">
+            <Card className="bg-gradient-to-br from-primary/10 to-secondary/10 border-primary/20">
               <CardContent className="pt-6 pb-6">
                 <div className="text-center">
-                  <div className="text-5xl font-bold text-amber-600 mb-1">
+                  <div className="text-5xl font-bold text-primary mb-1">
                     {result.styleCompatibility.score}%
                   </div>
                   <p className="text-sm text-gray-600">
@@ -484,7 +484,7 @@ export function FriendCompare({
                 </div>
 
                 {/* Score explanation */}
-                <div className="mt-4 pt-4 border-t border-amber-200">
+                <div className="mt-4 pt-4 border-t border-primary/20">
                   <p className="text-xs text-gray-600 mb-2 text-center font-medium">
                     How it works
                   </p>
@@ -518,7 +518,7 @@ export function FriendCompare({
                         {result.styleCompatibility.topOverlaps.map((o) => (
                           <div key={o.style} className="flex justify-between">
                             <span>{o.style}</span>
-                            <span className="text-amber-600">{o.overlap}% of match</span>
+                            <span className="text-primary">{o.overlap}% of match</span>
                           </div>
                         ))}
                       </div>
@@ -533,7 +533,7 @@ export function FriendCompare({
                           <div key={d.style} className="flex justify-between">
                             <span>{d.style}</span>
                             <span className="text-gray-400">
-                              <span className="text-amber-600">{d.myPercent.toFixed(0)}%</span>
+                              <span className="text-primary">{d.myPercent.toFixed(0)}%</span>
                               {" vs "}
                               <span>{d.friendPercent.toFixed(0)}%</span>
                             </span>
@@ -591,7 +591,7 @@ export function FriendCompare({
               {/* Legend */}
               <div className="flex items-center gap-4 mt-2">
                 <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-amber-500" />
+                  <div className="w-3 h-3 rounded-full bg-primary" />
                   <span className="text-xs text-gray-600">You</span>
                 </div>
                 <div className="flex items-center gap-1.5">
@@ -607,14 +607,14 @@ export function FriendCompare({
                     <div className="flex justify-between text-sm">
                       <span className="font-medium text-gray-900">{s.style}</span>
                       <span className="text-xs text-gray-500">
-                        <span className="text-amber-600">{s.myPercent.toFixed(0)}%</span>
+                        <span className="text-primary">{s.myPercent.toFixed(0)}%</span>
                         {" / "}
                         <span className="text-gray-500">{s.friendPercent.toFixed(0)}%</span>
                       </span>
                     </div>
                     <div className="flex h-1.5 rounded-full overflow-hidden bg-gray-100">
                       <div
-                        className="bg-amber-500"
+                        className="bg-primary"
                         style={{
                           width: `${(s.myPercent / (s.myPercent + s.friendPercent || 1)) * 100}%`,
                         }}

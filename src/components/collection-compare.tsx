@@ -253,10 +253,10 @@ export function CollectionCompare({
       {comparison && (
         <div className="space-y-6">
           {/* Compatibility Score */}
-          <Card className="bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200">
+          <Card className="bg-gradient-to-br from-primary/10 to-secondary/10 border-primary/20">
             <CardContent className="pt-8 pb-8">
               <div className="text-center">
-                <div className="text-7xl font-bold text-amber-600 mb-2">
+                <div className="text-7xl font-bold text-primary mb-2">
                   {comparison.compatibilityScore}%
                 </div>
                 <p className="text-lg text-gray-600">
@@ -273,15 +273,15 @@ export function CollectionCompare({
               {/* Venn diagram representation */}
               <div className="flex items-center justify-center gap-4 mt-8">
                 <div className="text-center">
-                  <div className="w-24 h-24 rounded-full bg-amber-200 flex items-center justify-center">
-                    <span className="font-bold text-lg text-amber-800">
+                  <div className="w-24 h-24 rounded-full bg-primary/20 flex items-center justify-center">
+                    <span className="font-bold text-lg text-primary">
                       {comparison.onlyMe.length}
                     </span>
                   </div>
                   <p className="text-sm mt-2 text-gray-500">Only you</p>
                 </div>
                 <div className="text-center -mx-6 z-10">
-                  <div className="w-20 h-20 rounded-full bg-amber-500 flex items-center justify-center">
+                  <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center">
                     <span className="font-bold text-lg text-white">
                       {comparison.overlap.length}
                     </span>
@@ -323,7 +323,7 @@ export function CollectionCompare({
                     </div>
                     <div className="flex h-2 rounded-full overflow-hidden bg-gray-100">
                       <div
-                        className="bg-amber-500"
+                        className="bg-primary"
                         style={{
                           width: `${
                             (g.myCount / (g.myCount + g.friendCount)) * 100

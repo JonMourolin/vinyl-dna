@@ -194,7 +194,7 @@ export function DashboardClient({ username, avatarUrl, expectedTotal }: Dashboar
           <div className="flex items-center gap-3 p-2 rounded-lg bg-gray-50">
             <Avatar className="w-9 h-9">
               {avatarUrl && <AvatarImage src={avatarUrl} alt={username} />}
-              <AvatarFallback className="bg-amber-100 text-amber-700 text-sm font-medium">
+              <AvatarFallback className="bg-primary/10 text-primary text-sm font-medium">
                 {username[0].toUpperCase()}
               </AvatarFallback>
             </Avatar>
@@ -426,7 +426,7 @@ function StatCard({
               <div className="flex items-baseline gap-1.5">
                 <p className="text-lg font-semibold text-gray-900 truncate">{value}</p>
                 {sublabel && (
-                  <span className="text-xs text-amber-600 flex-shrink-0">{sublabel}</span>
+                  <span className="text-xs text-primary flex-shrink-0">{sublabel}</span>
                 )}
               </div>
             )}

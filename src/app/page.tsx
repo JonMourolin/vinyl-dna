@@ -62,9 +62,9 @@ export default function Home() {
             {["View your collection", "View your wantlist", "Read your profile info"].map(
               (permission) => (
                 <div key={permission} className="flex items-center justify-center gap-3">
-                  <div className="w-5 h-5 rounded-full bg-amber-50 flex items-center justify-center">
+                  <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
                     <svg
-                      className="w-3 h-3 text-amber-600"
+                      className="w-3 h-3 text-primary"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -90,7 +90,7 @@ export default function Home() {
               href="https://www.discogs.com/users/create"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-amber-600 hover:text-amber-700 underline underline-offset-2"
+              className="text-primary hover:text-primary/80 underline underline-offset-2"
             >
               Create one free
             </a>
