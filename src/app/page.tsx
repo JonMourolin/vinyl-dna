@@ -1,21 +1,59 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
+
+const features = [
+  { name: "Collection", desc: "Import & organize" },
+  { name: "DNA", desc: "Discover patterns" },
+  { name: "Compare", desc: "Match collections" },
+  { name: "Search", desc: "Find records" },
+  { name: "Trade", desc: "Exchange vinyl" },
+  { name: "Stats", desc: "View analytics" },
+];
 
 export default function Home() {
   return (
     <main className="min-h-screen flex flex-col lg:flex-row bg-background">
-      {/* LEFT PANEL - Visual/Brand (full bleed) */}
-      <div
-        className="lg:w-1/2 min-h-[40vh] lg:min-h-screen relative overflow-hidden"
-        style={{
-          backgroundImage: `url('https://images.pexels.com/photos/2117243/pexels-photo-2117243.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        {/* Dark overlay for better contrast */}
-        <div className="absolute inset-0 bg-black/20" />
+      {/* LEFT PANEL - Feature Grid */}
+      <div className="lg:w-1/2 min-h-[40vh] lg:min-h-screen relative overflow-hidden bg-zinc-900 flex flex-col items-center justify-center p-6 lg:p-10">
+        {/* Background subtle gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-zinc-800/30 via-zinc-900 to-zinc-950" />
+
+        <div className="relative z-10 w-full max-w-lg">
+          {/* Main illustration displayed as grid */}
+          <div className="relative mb-6">
+            <Image
+              src="/illustrations.png"
+              alt="Vinyl collection features"
+              width={800}
+              height={400}
+              className="w-full h-auto object-contain drop-shadow-xl"
+              priority
+            />
+          </div>
+
+          {/* Feature labels grid - matches illustration layout (3x2) */}
+          <div className="grid grid-cols-3 gap-2 lg:gap-3">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className="group text-center p-2 lg:p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-200 cursor-default border border-transparent hover:border-[#e57373]/30"
+              >
+                <p className="text-xs lg:text-sm font-medium text-white/90 group-hover:text-[#e57373] transition-colors">
+                  {feature.name}
+                </p>
+                <p className="text-[10px] lg:text-xs text-white/40 mt-0.5">
+                  {feature.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Decorative elements */}
+        <div className="absolute top-10 right-10 w-32 h-32 bg-[#e57373]/5 rounded-full blur-2xl" />
+        <div className="absolute bottom-10 left-10 w-24 h-24 bg-[#e57373]/5 rounded-full blur-xl" />
       </div>
 
       {/* RIGHT PANEL - Login/Form */}
