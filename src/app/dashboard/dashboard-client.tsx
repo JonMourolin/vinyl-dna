@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DNACharts } from "@/components/dna-charts";
 import { FriendCompare } from "@/components/friend-compare";
@@ -210,6 +211,12 @@ export function DashboardClient({ username, avatarUrl, expectedTotal }: Dashboar
                   <span className="text-muted-foreground/70"> (cached)</span>
                 )}
               </p>
+              {loading && expectedTotal && (
+                <Progress
+                  value={(loadedCount / expectedTotal) * 100}
+                  className="h-1 mt-1"
+                />
+              )}
             </div>
             {!loading && (
               <button
