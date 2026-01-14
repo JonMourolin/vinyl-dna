@@ -5,6 +5,17 @@ All notable changes to DeepCogs will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.4] - 2026-01-14
+
+### Changed
+- **Velvet Dark Theme**: New shadcn theme with warm coral/reddish tones replacing the previous light theme
+- Replaced all hardcoded colors with semantic theme tokens across components
+
+### Fixed
+- CSS variable ordering in globals.css - `@theme inline` now comes after `:root` and `.dark` so Tailwind can resolve variable references
+
+---
+
 ## [0.6.3] - 2026-01-08
 
 ### Documentation
@@ -172,6 +183,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.6.4 | 2026-01-14 | Velvet Dark Theme, semantic color tokens, CSS variable fix |
 | 0.6.3 | 2026-01-08 | Documentation updates (CLAUDE.md, ROADMAP.md) |
 | 0.6.2 | 2026-01-08 | Caching (profile, collection, recommendations), loading progress |
 | 0.6.1 | 2026-01-08 | Smart recommendations, style-based compatibility, removed DNA card |
