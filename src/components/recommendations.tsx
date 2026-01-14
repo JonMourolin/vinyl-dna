@@ -545,17 +545,17 @@ export function Recommendations({ releases, isLoading }: RecommendationsProps) {
         <>
           {/* Analyzed styles indicator */}
           {recommendations.analyzedStyles.length > 0 && (
-            <div className="flex items-center gap-2 overflow-x-auto pb-2 -mb-2">
-              <span className="text-sm text-muted-foreground whitespace-nowrap flex-shrink-0">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-sm text-muted-foreground whitespace-nowrap">
                 Analyzing styles:
               </span>
               {recommendations.analyzedStyles.map((style) => (
-                <Badge key={style} variant="secondary" className="flex-shrink-0">
+                <Badge key={style} variant="secondary">
                   {style}
                 </Badge>
               ))}
               {recommendations.hasLastfm && (
-                <Badge variant="outline" className="border-primary/30 text-primary flex-shrink-0">
+                <Badge variant="outline" className="border-primary/30 text-primary">
                   + Last.fm
                 </Badge>
               )}
