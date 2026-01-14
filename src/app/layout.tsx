@@ -51,9 +51,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} font-sans antialiased min-h-screen`}
+        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} font-sans antialiased min-h-screen flex flex-col`}
       >
-        {children}
+        <main className="flex-1">{children}</main>
+        <footer className="py-6 px-6 text-right text-xs text-neutral-500">
+          Copyright © 2025 Deepcogs - All rights reserved
+        </footer>
       </body>
     </html>
   );
