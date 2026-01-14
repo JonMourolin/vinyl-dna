@@ -556,37 +556,25 @@ export function FriendCompare({
               </CardContent>
             </Card>
 
-            {/* Trade Summary */}
-            <Card className="bg-gradient-to-r from-primary/10 to-secondary/10">
-              <CardContent className="pt-6 pb-6">
-                <div className="text-center mb-4">
-                  <p className="text-sm font-medium text-muted-foreground">Trade Opportunities</p>
-                </div>
-                <div className="flex justify-center gap-8">
-                  <div className="text-center">
-                    <p className="text-3xl font-bold text-green-500">{result.youCanOffer.length}</p>
-                    <p className="text-xs text-muted-foreground">You can offer</p>
+            {/* Albums In Common */}
+            <Card>
+              <CardHeader className="pb-2 pt-4">
+                <CardTitle className="text-base">
+                  Albums In Common ({result.overlap.length})
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pb-4">
+                {result.overlap.length === 0 ? (
+                  <p className="text-muted-foreground text-center py-8">
+                    No overlapping albums found
+                  </p>
+                ) : (
+                  <div className="h-[360px] overflow-y-auto space-y-2 scrollbar-velvet">
+                    {result.overlap.slice(0, 50).map((release) => (
+                      <ReleaseCard key={release.instance_id} release={release} />
+                    ))}
                   </div>
-                  <div className="flex items-center">
-                    <svg
-                      className="w-6 h-6 text-muted-foreground"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
-                      />
-                    </svg>
-                  </div>
-                  <div className="text-center">
-                    <p className="text-3xl font-bold text-primary">{result.theyCanOffer.length}</p>
-                    <p className="text-xs text-muted-foreground">They can offer</p>
-                  </div>
-                </div>
+                )}
               </CardContent>
             </Card>
           </div>
@@ -712,28 +700,6 @@ export function FriendCompare({
               </Card>
             </div>
           )}
-
-          {/* Albums In Common */}
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base">
-                Albums In Common ({result.overlap.length})
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {result.overlap.length === 0 ? (
-                <p className="text-muted-foreground text-center py-8">
-                  No overlapping albums found
-                </p>
-              ) : (
-                <div className="grid sm:grid-cols-2 gap-3 max-h-[400px] overflow-y-auto">
-                  {result.overlap.slice(0, 50).map((release) => (
-                    <ReleaseCard key={release.instance_id} release={release} />
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
         </div>
       )}
     </div>
