@@ -365,38 +365,31 @@ export function DNACharts({ releases }: DNAChartsProps) {
               Rare formats and pressing breakdown
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex-1">
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-              <div className="flex flex-col items-center justify-center p-3 md:p-4 rounded-lg bg-chart-1/10 border border-chart-1/20">
-                <p className="text-2xl md:text-4xl font-bold text-chart-1">
-                  {analysis.oddities.testPressings}
-                </p>
-                <p className="text-xs md:text-sm text-muted-foreground mt-1 md:mt-2 text-center">Test Pressings</p>
-              </div>
-              <div className="flex flex-col items-center justify-center p-3 md:p-4 rounded-lg bg-chart-2/10 border border-chart-2/20">
-                <p className="text-2xl md:text-4xl font-bold text-chart-2">
-                  {analysis.oddities.promos}
-                </p>
-                <p className="text-xs md:text-sm text-muted-foreground mt-1 md:mt-2 text-center">Promos</p>
-              </div>
-              <div className="flex flex-col items-center justify-center p-3 md:p-4 rounded-lg bg-chart-3/10 border border-chart-3/20">
-                <p className="text-2xl md:text-4xl font-bold text-chart-3">
-                  {analysis.oddities.limited}
-                </p>
-                <p className="text-xs md:text-sm text-muted-foreground mt-1 md:mt-2 text-center">Limited</p>
-              </div>
-              <div className="flex flex-col items-center justify-center p-3 md:p-4 rounded-lg bg-chart-4/10 border border-chart-4/20">
-                <p className="text-2xl md:text-4xl font-bold text-chart-4">
-                  {analysis.totalReleases - analysis.represses}
-                </p>
-                <p className="text-xs md:text-sm text-muted-foreground mt-1 md:mt-2 text-center">Originals</p>
-              </div>
-              <div className="flex flex-col items-center justify-center p-3 md:p-4 rounded-lg bg-chart-5/10 border border-chart-5/20 col-span-2 sm:col-span-1">
-                <p className="text-2xl md:text-4xl font-bold text-chart-5">
-                  {analysis.represses}
-                </p>
-                <p className="text-xs md:text-sm text-muted-foreground mt-1 md:mt-2 text-center">Represses</p>
-              </div>
+          <CardContent className="flex-1 flex items-center">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 w-full">
+              {[
+                { label: "Originals", value: analysis.totalReleases - analysis.represses, colorVar: "--chart-4" },
+                { label: "Represses", value: analysis.represses, colorVar: "--chart-5" },
+                { label: "Limited", value: analysis.oddities.limited, colorVar: "--chart-3" },
+                { label: "Promos", value: analysis.oddities.promos, colorVar: "--chart-2" },
+                { label: "Test Press", value: analysis.oddities.testPressings, colorVar: "--chart-1" },
+              ]
+                .sort((a, b) => b.value - a.value)
+                .map((item, index) => (
+                  <div
+                    key={item.label}
+                    className={`flex flex-col items-center justify-center p-4 md:p-6 rounded-lg border aspect-square ${index === 4 ? "col-span-2 sm:col-span-1" : ""}`}
+                    style={{
+                      backgroundColor: `oklch(from var(${item.colorVar}) l c h / 0.1)`,
+                      borderColor: `oklch(from var(${item.colorVar}) l c h / 0.2)`,
+                    }}
+                  >
+                    <p className="text-2xl md:text-3xl font-bold" style={{ color: `var(${item.colorVar})` }}>
+                      {item.value}
+                    </p>
+                    <p className="text-xs md:text-sm text-muted-foreground mt-1 md:mt-2 text-center whitespace-nowrap">{item.label}</p>
+                  </div>
+                ))}
             </div>
           </CardContent>
         </Card>
