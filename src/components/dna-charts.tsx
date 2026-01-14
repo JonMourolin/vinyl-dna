@@ -212,40 +212,93 @@ export function DNACharts({ releases }: DNAChartsProps) {
           </CardContent>
         </Card>
 
-        {/* Decade Distribution */}
+        {/* Decade Distribution - Vinyl Grooves */}
         <Card>
           <CardHeader>
             <CardTitle>Era Distribution</CardTitle>
             <CardDescription>When your music was released</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={analysis.decades} layout="vertical">
-                  <XAxis type="number" stroke="var(--muted-foreground)" fontSize={12} />
-                  <YAxis
-                    type="category"
-                    dataKey="name"
-                    stroke="var(--muted-foreground)"
-                    width={60}
-                    fontSize={12}
-                  />
-                  <Tooltip
-                    contentStyle={{
-                      background: "var(--popover)",
-                      border: "1px solid var(--border)",
-                      borderRadius: "8px",
-                      boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
-                      color: "var(--popover-foreground)",
-                    }}
-                  />
-                  <Bar
-                    dataKey="value"
-                    fill="#E8786B"
-                    radius={[0, 4, 4, 0]}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
+            <div className="h-[300px] flex items-center justify-center">
+              {(() => {
+                const maxValue = Math.max(...analysis.decades.map((d) => d.value));
+                const total = analysis.decades.reduce((sum, d) => sum + d.value, 0);
+                const size = 260;
+                const centerX = size / 2;
+                const centerY = size / 2;
+                const minRadius = 30;
+                const maxRadius = size / 2 - 10;
+                const ringGap = 4;
+                const ringCount = analysis.decades.length;
+                const ringWidth = (maxRadius - minRadius - ringGap * (ringCount - 1)) / ringCount;
+
+                return (
+                  <div className="relative">
+                    <svg width={size} height={size} className="transform -rotate-90">
+                      {/* Center hole */}
+                      <circle cx={centerX} cy={centerY} r={minRadius - 5} fill="var(--background)" />
+                      <circle cx={centerX} cy={centerY} r={8} fill="var(--primary)" />
+
+                      {/* Grooves for each decade */}
+                      {analysis.decades.map((decade, i) => {
+                        const radius = minRadius + i * (ringWidth + ringGap) + ringWidth / 2;
+                        const circumference = 2 * Math.PI * radius;
+                        const percent = decade.value / maxValue;
+                        const strokeDasharray = `${circumference * percent} ${circumference * (1 - percent)}`;
+                        const opacity = 0.4 + (percent * 0.6);
+
+                        return (
+                          <g key={decade.name}>
+                            {/* Background ring */}
+                            <circle
+                              cx={centerX}
+                              cy={centerY}
+                              r={radius}
+                              fill="none"
+                              stroke="var(--muted)"
+                              strokeWidth={ringWidth}
+                              opacity={0.3}
+                            />
+                            {/* Filled portion */}
+                            <circle
+                              cx={centerX}
+                              cy={centerY}
+                              r={radius}
+                              fill="none"
+                              stroke="var(--chart-1)"
+                              strokeWidth={ringWidth}
+                              strokeDasharray={strokeDasharray}
+                              strokeLinecap="round"
+                              opacity={opacity}
+                              className="transition-all duration-500"
+                            />
+                          </g>
+                        );
+                      })}
+                    </svg>
+                  </div>
+                );
+              })()}
+              {/* Legend */}
+              <div className="ml-6 space-y-1">
+                {analysis.decades.map((decade, i) => {
+                  const maxValue = Math.max(...analysis.decades.map((d) => d.value));
+                  const percent = Math.round((decade.value / maxValue) * 100);
+                  return (
+                    <div key={decade.name} className="flex items-center gap-2 text-xs">
+                      <div
+                        className="w-3 h-3 rounded-full"
+                        style={{
+                          backgroundColor: "var(--chart-1)",
+                          opacity: 0.4 + (percent / 100) * 0.6
+                        }}
+                      />
+                      <span className="text-muted-foreground w-12">{decade.name}</span>
+                      <span className="text-foreground font-medium">{decade.value}</span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </CardContent>
         </Card>
