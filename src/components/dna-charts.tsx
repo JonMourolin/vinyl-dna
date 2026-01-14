@@ -10,9 +10,11 @@ import {
 } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import {
-  PieChart,
-  Pie,
-  Cell,
+  RadarChart,
+  Radar,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
   BarChart,
   Bar,
   XAxis,
@@ -158,37 +160,53 @@ export function DNACharts({ releases }: DNAChartsProps) {
           <CardContent>
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={analysis.genres}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={100}
-                    paddingAngle={2}
-                    dataKey="value"
-                    label={({ name, percent }) =>
-                      `${name} (${((percent ?? 0) * 100).toFixed(0)}%)`
-                    }
-                    labelLine={false}
-                  >
-                    {analysis.genres.map((_, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
+                {(() => {
+                  // Square root scale: compresses high values, expands low values
+                  const maxSqrt = Math.sqrt(Math.max(...analysis.genres.map((g) => g.value)));
+                  const radarData = analysis.genres.map((g) => ({
+                    genre: g.name,
+                    value: Math.round((Math.sqrt(g.value) / maxSqrt) * 100),
+                    actualPercent: Math.round((g.value / analysis.totalReleases) * 100),
+                    count: g.value,
+                  }));
+                  return (
+                    <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
+                      <PolarGrid stroke="var(--border)" strokeOpacity={0.5} />
+                      <PolarAngleAxis
+                        dataKey="genre"
+                        tick={{ fill: "var(--muted-foreground)", fontSize: 11 }}
                       />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    contentStyle={{
-                      background: "var(--popover)",
-                      border: "1px solid var(--border)",
-                      borderRadius: "8px",
-                      boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
-                      color: "var(--popover-foreground)",
-                    }}
-                  />
-                </PieChart>
+                      <PolarRadiusAxis
+                        angle={90}
+                        domain={[0, 100]}
+                        tick={false}
+                        axisLine={false}
+                      />
+                      <Radar
+                        name="Genre"
+                        dataKey="value"
+                        stroke="var(--chart-1)"
+                        fill="var(--chart-1)"
+                        fillOpacity={0.6}
+                        strokeWidth={2}
+                      />
+                      <Tooltip
+                        contentStyle={{
+                          background: "var(--popover)",
+                          border: "1px solid var(--border)",
+                          borderRadius: "8px",
+                          boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                          color: "var(--popover-foreground)",
+                        }}
+                        formatter={(_, __, props) => {
+                          const { actualPercent, count } = props.payload;
+                          return [`${actualPercent}% (${count} releases)`, ""];
+                        }}
+                        labelFormatter={(label) => label}
+                      />
+                    </RadarChart>
+                  );
+                })()}
               </ResponsiveContainer>
             </div>
           </CardContent>
