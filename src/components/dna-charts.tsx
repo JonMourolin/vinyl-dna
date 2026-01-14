@@ -221,14 +221,25 @@ export function DNACharts({ releases }: DNAChartsProps) {
           <CardContent>
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={analysis.decades} layout="vertical">
-                  <XAxis type="number" stroke="var(--muted-foreground)" fontSize={12} />
-                  <YAxis
-                    type="category"
+                <BarChart data={analysis.decades}>
+                  <defs>
+                    <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="var(--chart-1)" stopOpacity={1} />
+                      <stop offset="100%" stopColor="var(--chart-3)" stopOpacity={0.8} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis
                     dataKey="name"
                     stroke="var(--muted-foreground)"
-                    width={60}
                     fontSize={12}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+                  <YAxis
+                    stroke="var(--muted-foreground)"
+                    fontSize={12}
+                    tickLine={false}
+                    axisLine={false}
                   />
                   <Tooltip
                     contentStyle={{
@@ -238,11 +249,13 @@ export function DNACharts({ releases }: DNAChartsProps) {
                       boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
                       color: "var(--popover-foreground)",
                     }}
+                    formatter={(value: number) => [`${value} releases`, "Count"]}
+                    cursor={{ fill: "var(--muted)", opacity: 0.3 }}
                   />
                   <Bar
                     dataKey="value"
-                    fill="#E8786B"
-                    radius={[0, 4, 4, 0]}
+                    fill="url(#barGradient)"
+                    radius={[4, 4, 0, 0]}
                   />
                 </BarChart>
               </ResponsiveContainer>
