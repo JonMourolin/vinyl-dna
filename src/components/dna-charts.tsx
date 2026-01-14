@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { Disc3 } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -173,6 +174,12 @@ export function DNACharts({ releases }: DNAChartsProps) {
                   }));
                   return (
                     <RadarChart cx="50%" cy="50%" outerRadius="70%" data={radarData}>
+                      <defs>
+                        <radialGradient id="radarGradient" cx="50%" cy="50%" r="50%">
+                          <stop offset="0%" stopColor="var(--chart-1)" stopOpacity={0.9} />
+                          <stop offset="100%" stopColor="var(--chart-1)" stopOpacity={0.2} />
+                        </radialGradient>
+                      </defs>
                       <PolarGrid stroke="var(--border)" strokeOpacity={0.5} />
                       <PolarAngleAxis
                         dataKey="genre"
@@ -188,8 +195,7 @@ export function DNACharts({ releases }: DNAChartsProps) {
                         name="Genre"
                         dataKey="value"
                         stroke="var(--chart-1)"
-                        fill="var(--chart-1)"
-                        fillOpacity={0.6}
+                        fill="url(#radarGradient)"
                         strokeWidth={2}
                       />
                       <Tooltip
@@ -215,8 +221,8 @@ export function DNACharts({ releases }: DNAChartsProps) {
                               <p style={{ color: "var(--popover-foreground)", margin: 0, fontWeight: 500 }}>
                                 {data.genre}
                               </p>
-                              <p style={{ color: "var(--chart-1)", margin: 0 }}>
-                                <strong>{data.actualPercent}%</strong> ({data.count} releases)
+                              <p style={{ color: "var(--chart-1)", margin: 0, display: "flex", alignItems: "center", gap: "4px" }}>
+                                <strong>{data.actualPercent}%</strong> ({data.count} <Disc3 className="w-3 h-3 inline" />)
                               </p>
                             </div>
                           );
@@ -274,8 +280,8 @@ export function DNACharts({ releases }: DNAChartsProps) {
                           <p style={{ color: "var(--popover-foreground)", margin: 0, fontWeight: 500 }}>
                             {label}
                           </p>
-                          <p style={{ color: "var(--chart-1)", margin: 0 }}>
-                            {payload[0].value} releases
+                          <p style={{ color: "var(--chart-1)", margin: 0, display: "flex", alignItems: "center", gap: "4px" }}>
+                            {payload[0].value} <Disc3 className="w-3 h-3" />
                           </p>
                         </div>
                       );
@@ -338,8 +344,8 @@ export function DNACharts({ releases }: DNAChartsProps) {
                     <span className="font-medium text-foreground truncate max-w-[120px] sm:max-w-[200px]">
                       {label.name}
                     </span>
-                    <span className="text-muted-foreground">
-                      {label.value} releases
+                    <span className="text-muted-foreground flex items-center gap-1">
+                      {label.value} <Disc3 className="w-3 h-3" />
                     </span>
                   </div>
                   <div className="h-2 bg-muted rounded-full overflow-hidden">
