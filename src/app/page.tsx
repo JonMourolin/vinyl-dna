@@ -1,21 +1,85 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+
+const slides = [
+  { tagline: "Discover your musical DNA", accent: "DNA" },
+  { tagline: "Analyze your collection", accent: "Analyze" },
+  { tagline: "Compare with friends", accent: "Compare" },
+  { tagline: "Find your next favorite", accent: "Find" },
+];
 
 export default function Home() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <main className="min-h-screen flex flex-col lg:flex-row bg-background">
-      {/* LEFT PANEL - Visual/Brand (full bleed) */}
-      <div
-        className="lg:w-1/2 min-h-[40vh] lg:min-h-screen relative overflow-hidden"
-        style={{
-          backgroundImage: `url('https://images.pexels.com/photos/2117243/pexels-photo-2117243.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        {/* Dark overlay for better contrast */}
-        <div className="absolute inset-0 bg-black/20" />
+      {/* LEFT PANEL - Rotating Carousel */}
+      <div className="lg:w-1/2 min-h-[40vh] lg:min-h-screen relative overflow-hidden bg-zinc-900 flex flex-col items-center justify-center">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-zinc-800/60 via-zinc-900 to-zinc-900" />
+
+        {/* Carousel content */}
+        <div className="relative z-10 w-full max-w-md px-8">
+          {/* Illustration */}
+          <div className="relative">
+            <Image
+              src="/illustrations.png"
+              alt="Vinyl collection analysis"
+              width={600}
+              height={300}
+              className="w-full h-auto object-contain drop-shadow-2xl transition-transform duration-700"
+              style={{
+                transform: `scale(${1 + currentSlide * 0.02})`,
+              }}
+              priority
+            />
+          </div>
+
+          {/* Tagline with fade transition */}
+          <div className="mt-8 h-16 relative">
+            {slides.map((slide, index) => (
+              <p
+                key={index}
+                className={`absolute inset-0 text-center text-xl font-light text-white/90 transition-all duration-500 ${
+                  currentSlide === index
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-4"
+                }`}
+              >
+                {slide.tagline}
+              </p>
+            ))}
+          </div>
+
+          {/* Slide indicators */}
+          <div className="flex justify-center gap-2 mt-4">
+            {slides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  currentSlide === index
+                    ? "bg-[#e57373] w-6"
+                    : "bg-white/30 hover:bg-white/50"
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Decorative coral accent */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#e57373]/50 to-transparent" />
       </div>
 
       {/* RIGHT PANEL - Login/Form */}
