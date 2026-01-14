@@ -212,40 +212,72 @@ export function DNACharts({ releases }: DNAChartsProps) {
           </CardContent>
         </Card>
 
-        {/* Decade Distribution */}
+        {/* Decade Distribution - Heat Strip */}
         <Card>
           <CardHeader>
             <CardTitle>Era Distribution</CardTitle>
             <CardDescription>When your music was released</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={analysis.decades} layout="vertical">
-                  <XAxis type="number" stroke="var(--muted-foreground)" fontSize={12} />
-                  <YAxis
-                    type="category"
-                    dataKey="name"
-                    stroke="var(--muted-foreground)"
-                    width={60}
-                    fontSize={12}
-                  />
-                  <Tooltip
-                    contentStyle={{
-                      background: "var(--popover)",
-                      border: "1px solid var(--border)",
-                      borderRadius: "8px",
-                      boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
-                      color: "var(--popover-foreground)",
-                    }}
-                  />
-                  <Bar
-                    dataKey="value"
-                    fill="#E8786B"
-                    radius={[0, 4, 4, 0]}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
+            <div className="space-y-6">
+              {(() => {
+                const maxValue = Math.max(...analysis.decades.map((d) => d.value));
+                const total = analysis.decades.reduce((sum, d) => sum + d.value, 0);
+
+                return (
+                  <>
+                    {/* Heat strip */}
+                    <div className="flex h-16 rounded-lg overflow-hidden border border-border">
+                      {analysis.decades.map((decade) => {
+                        const percent = (decade.value / total) * 100;
+                        const intensity = decade.value / maxValue;
+                        return (
+                          <div
+                            key={decade.name}
+                            className="relative group flex items-center justify-center transition-all"
+                            style={{
+                              flex: decade.value,
+                              backgroundColor: `color-mix(in oklch, var(--chart-1) ${Math.round(20 + intensity * 80)}%, var(--card))`,
+                            }}
+                          >
+                            <span className="text-xs font-medium text-foreground/80 group-hover:text-foreground transition-colors">
+                              {percent < 20 ? decade.name.slice(2, 4) : decade.name.replace("s", "")}
+                            </span>
+                            {/* Tooltip on hover */}
+                            <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-popover border border-border rounded-md px-2 py-1 text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg z-10">
+                              <span className="font-medium">{decade.value}</span> releases ({Math.round(percent)}%)
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Legend with bars */}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      {analysis.decades.map((decade) => {
+                        const percent = Math.round((decade.value / maxValue) * 100);
+                        return (
+                          <div key={decade.name} className="space-y-1">
+                            <div className="flex justify-between text-xs">
+                              <span className="text-muted-foreground">{decade.name}</span>
+                              <span className="text-foreground font-medium">{decade.value}</span>
+                            </div>
+                            <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                              <div
+                                className="h-full rounded-full transition-all"
+                                style={{
+                                  width: `${percent}%`,
+                                  backgroundColor: "var(--chart-1)",
+                                }}
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </>
+                );
+              })()}
             </div>
           </CardContent>
         </Card>
