@@ -17,6 +17,8 @@ import {
   PolarRadiusAxis,
   BarChart,
   Bar,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   Tooltip,
@@ -221,14 +223,25 @@ export function DNACharts({ releases }: DNAChartsProps) {
           <CardContent>
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={analysis.decades} layout="vertical">
-                  <XAxis type="number" stroke="var(--muted-foreground)" fontSize={12} />
-                  <YAxis
-                    type="category"
+                <AreaChart data={analysis.decades}>
+                  <defs>
+                    <linearGradient id="eraGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="var(--chart-1)" stopOpacity={0.8} />
+                      <stop offset="100%" stopColor="var(--chart-1)" stopOpacity={0.1} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis
                     dataKey="name"
                     stroke="var(--muted-foreground)"
-                    width={60}
                     fontSize={12}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+                  <YAxis
+                    stroke="var(--muted-foreground)"
+                    fontSize={12}
+                    tickLine={false}
+                    axisLine={false}
                   />
                   <Tooltip
                     contentStyle={{
@@ -238,13 +251,16 @@ export function DNACharts({ releases }: DNAChartsProps) {
                       boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
                       color: "var(--popover-foreground)",
                     }}
+                    formatter={(value: number) => [`${value} releases`, "Count"]}
                   />
-                  <Bar
+                  <Area
+                    type="monotone"
                     dataKey="value"
-                    fill="#E8786B"
-                    radius={[0, 4, 4, 0]}
+                    stroke="var(--chart-1)"
+                    strokeWidth={2}
+                    fill="url(#eraGradient)"
                   />
-                </BarChart>
+                </AreaChart>
               </ResponsiveContainer>
             </div>
           </CardContent>
