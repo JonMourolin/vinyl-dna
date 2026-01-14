@@ -12,6 +12,11 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import type { DiscogsRelease } from "@/lib/discogs";
 
 interface FriendCompareProps {
@@ -484,31 +489,37 @@ export function FriendCompare({
 
                 {/* Score explanation */}
                 <div className="mt-4 pt-4 border-t border-primary/20">
-                  <p className="text-xs text-muted-foreground mb-2 text-center font-medium">
-                    How it works
-                  </p>
-                  <p className="text-xs text-muted-foreground/80 mb-3 leading-relaxed">
-                    Cosine similarity measures the angle between your style vectors.
-                    Think of it as: are you pointing in the same direction in music taste?
-                  </p>
-                  <div className="text-xs text-muted-foreground/60 space-y-0.5 mb-4">
-                    <div className="flex justify-between">
-                      <span>~90%+</span>
-                      <span>Nearly identical taste</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>~70%</span>
-                      <span>Similar with different emphasis</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>~40%</span>
-                      <span>Some overlap, different tastes</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>&lt;20%</span>
-                      <span>Very different collections</span>
-                    </div>
-                  </div>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <p className="text-xs text-muted-foreground mb-3 text-center font-medium cursor-help hover:text-primary transition-colors underline underline-offset-2 decoration-dotted">
+                        How it works
+                      </p>
+                    </TooltipTrigger>
+                    <TooltipContent side="bottom" sideOffset={8}>
+                      <p className="mb-2 leading-relaxed">
+                        Cosine similarity measures the angle between your style vectors.
+                        Think of it as: are you pointing in the same direction in music taste?
+                      </p>
+                      <div className="space-y-0.5 text-muted-foreground">
+                        <div className="flex justify-between gap-4">
+                          <span>~90%+</span>
+                          <span>Nearly identical taste</span>
+                        </div>
+                        <div className="flex justify-between gap-4">
+                          <span>~70%</span>
+                          <span>Similar with different emphasis</span>
+                        </div>
+                        <div className="flex justify-between gap-4">
+                          <span>~40%</span>
+                          <span>Some overlap, different tastes</span>
+                        </div>
+                        <div className="flex justify-between gap-4">
+                          <span>&lt;20%</span>
+                          <span>Very different collections</span>
+                        </div>
+                      </div>
+                    </TooltipContent>
+                  </Tooltip>
 
                   {result.styleCompatibility.topOverlaps.length > 0 && (
                     <>
