@@ -251,7 +251,7 @@ export function DNACharts({ releases }: DNAChartsProps) {
                       boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
                       color: "var(--popover-foreground)",
                     }}
-                    formatter={(value: number) => [`${value} releases`, "Count"]}
+                    formatter={(value) => [`${value} releases`, "Count"]}
                   />
                   <Area
                     type="monotone"

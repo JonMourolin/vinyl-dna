@@ -72,19 +72,19 @@
   --border: oklch(0.347 0.046 19.64);
   --input: oklch(0.37 0.054 19.94);
   --ring: oklch(0.622 0.2 8.157);
-  --chart-1: oklch(0.657 0.229 347.741);
-  --chart-2: oklch(0.591 0.214 341.657);
-  --chart-3: oklch(0.518 0.198 340.531);
-  --chart-4: oklch(0.443 0.164 356.722);
-  --chart-5: oklch(0.381 0.14 2.504);
+  --chart-1: oklch(0.62 0.16 18);
+  --chart-2: oklch(0.55 0.14 15);
+  --chart-3: oklch(0.48 0.12 20);
+  --chart-4: oklch(0.40 0.10 22);
+  --chart-5: oklch(0.33 0.08 25);
   --sidebar: oklch(0.184 0.024 19.638);
   --sidebar-foreground: oklch(0.829 0.025 17.666);
-  --sidebar-primary: oklch(0.526 0.174 342.065);
+  --sidebar-primary: oklch(0.55 0.14 18);
   --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.255 0.042 357.432);
+  --sidebar-accent: oklch(0.30 0.05 20);
   --sidebar-accent-foreground: oklch(0.976 0.001 0);
   --sidebar-border: oklch(0.347 0.058 20.428);
-  --sidebar-ring: oklch(0.581 0.243 335.261);
+  --sidebar-ring: oklch(0.55 0.14 18);
 
   /* Custom vinyl colors - coral palette */
   --vinyl: oklch(0.171 0.016 18.8);
