@@ -1,21 +1,31 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export default function Home() {
   return (
     <main className="min-h-screen flex flex-col lg:flex-row bg-background">
-      {/* LEFT PANEL - Visual/Brand (full bleed) */}
-      <div
-        className="lg:w-1/2 min-h-[40vh] lg:min-h-screen relative overflow-hidden"
-        style={{
-          backgroundImage: `url('https://images.pexels.com/photos/2117243/pexels-photo-2117243.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        {/* Dark overlay for better contrast */}
-        <div className="absolute inset-0 bg-black/20" />
+      {/* LEFT PANEL - Single Hero Illustration */}
+      <div className="lg:w-1/2 min-h-[40vh] lg:min-h-screen relative overflow-hidden bg-zinc-900 flex items-center justify-center">
+        {/* Subtle gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-zinc-800/50 via-transparent to-zinc-900/80" />
+
+        {/* Hero Illustration - DNA/Analysis focused */}
+        <div className="relative z-10 w-full max-w-md p-8">
+          <Image
+            src="/illustrations.png"
+            alt="Vinyl collection analysis"
+            width={800}
+            height={400}
+            className="w-full h-auto object-contain drop-shadow-2xl"
+            priority
+          />
+        </div>
+
+        {/* Decorative elements */}
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-[#e57373]/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-[#e57373]/5 rounded-full blur-2xl" />
       </div>
 
       {/* RIGHT PANEL - Login/Form */}
