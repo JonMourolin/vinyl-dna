@@ -5,6 +5,16 @@ All notable changes to DeepCogs will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.6] - 2026-01-14
+
+### Changed
+- **Chart Colors**: Updated to warm coral/terracotta tones matching Velvet theme (replaced pink/magenta)
+- **Chart Tooltips**: Cleaner format - removed cursor lines, bold percentages, no redundant labels
+- **Stat Cards**: Compact layout with reduced padding
+- **Oddities Card**: Items now fill available height
+
+---
+
 ## [0.6.5] - 2026-01-14
 
 ### Changed
@@ -194,6 +204,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.6.6 | 2026-01-14 | Velvet coral chart colors, cleaner tooltips, compact stat cards |
 | 0.6.5 | 2026-01-14 | Radar chart, area chart, stat card redesign, progress bar, tooltip |
 | 0.6.4 | 2026-01-14 | Velvet Dark Theme, semantic color tokens, CSS variable fix |
 | 0.6.3 | 2026-01-08 | Documentation updates (CLAUDE.md, ROADMAP.md) |
