@@ -253,12 +253,12 @@ export function CollectionCompare({
         <div className="space-y-6">
           {/* Compatibility Score */}
           <Card className="bg-gradient-to-br from-primary/10 to-secondary/10 border-primary/20">
-            <CardContent className="pt-8 pb-8">
+            <CardContent className="pt-6 pb-6 md:pt-8 md:pb-8">
               <div className="text-center">
-                <div className="text-7xl font-bold text-primary mb-2">
+                <div className="text-5xl md:text-7xl font-bold text-primary mb-2">
                   {comparison.compatibilityScore}%
                 </div>
-                <p className="text-lg text-muted-foreground">
+                <p className="text-base md:text-lg text-muted-foreground">
                   Collection Compatibility with{" "}
                   <span className="font-semibold text-foreground">
                     {comparison.friendUsername}
@@ -270,30 +270,30 @@ export function CollectionCompare({
               </div>
 
               {/* Venn diagram representation */}
-              <div className="flex items-center justify-center gap-4 mt-8">
+              <div className="flex items-center justify-center gap-2 sm:gap-4 mt-8">
                 <div className="text-center">
-                  <div className="w-24 h-24 rounded-full bg-primary/20 flex items-center justify-center">
-                    <span className="font-bold text-lg text-primary">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-primary/20 flex items-center justify-center">
+                    <span className="font-bold text-base md:text-lg text-primary">
                       {comparison.onlyMe.length}
                     </span>
                   </div>
-                  <p className="text-sm mt-2 text-muted-foreground">Only you</p>
+                  <p className="text-xs sm:text-sm mt-2 text-muted-foreground">Only you</p>
                 </div>
-                <div className="text-center -mx-6 z-10">
-                  <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center">
-                    <span className="font-bold text-lg text-primary-foreground">
+                <div className="text-center -mx-3 sm:-mx-4 md:-mx-6 z-10">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-primary flex items-center justify-center">
+                    <span className="font-bold text-base md:text-lg text-primary-foreground">
                       {comparison.overlap.length}
                     </span>
                   </div>
-                  <p className="text-sm mt-2 font-medium text-foreground">Both</p>
+                  <p className="text-xs sm:text-sm mt-2 font-medium text-foreground">Both</p>
                 </div>
                 <div className="text-center">
-                  <div className="w-24 h-24 rounded-full bg-secondary flex items-center justify-center">
-                    <span className="font-bold text-lg text-secondary-foreground">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-secondary flex items-center justify-center">
+                    <span className="font-bold text-base md:text-lg text-secondary-foreground">
                       {comparison.onlyFriend.length}
                     </span>
                   </div>
-                  <p className="text-sm mt-2 text-muted-foreground">
+                  <p className="text-xs sm:text-sm mt-2 text-muted-foreground">
                     Only {comparison.friendUsername}
                   </p>
                 </div>
@@ -346,7 +346,7 @@ export function CollectionCompare({
 
           {/* Collection Details with custom tabs */}
           <div className="space-y-4">
-            <div className="flex gap-2 p-1 bg-muted rounded-lg w-fit">
+            <div className="flex gap-2 p-1 bg-muted rounded-lg w-fit overflow-x-auto">
               <button
                 onClick={() => setActiveTab("overlap")}
                 className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
@@ -393,7 +393,7 @@ export function CollectionCompare({
                       No overlapping albums found
                     </p>
                   ) : (
-                    <div className="grid sm:grid-cols-2 gap-3 max-h-[400px] overflow-y-auto">
+                    <div className="grid sm:grid-cols-2 gap-3 max-h-[300px] md:max-h-[400px] overflow-y-auto">
                       {comparison.overlap.slice(0, 50).map((release) => (
                         <ReleaseCard key={release.instance_id} release={release} />
                       ))}
@@ -412,7 +412,7 @@ export function CollectionCompare({
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid sm:grid-cols-2 gap-3 max-h-[400px] overflow-y-auto">
+                  <div className="grid sm:grid-cols-2 gap-3 max-h-[300px] md:max-h-[400px] overflow-y-auto">
                     {comparison.onlyMe.slice(0, 50).map((release) => (
                       <ReleaseCard key={release.instance_id} release={release} />
                     ))}
@@ -432,7 +432,7 @@ export function CollectionCompare({
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid sm:grid-cols-2 gap-3 max-h-[400px] overflow-y-auto">
+                  <div className="grid sm:grid-cols-2 gap-3 max-h-[300px] md:max-h-[400px] overflow-y-auto">
                     {comparison.onlyFriend.slice(0, 50).map((release) => (
                       <ReleaseCard key={release.instance_id} release={release} />
                     ))}

@@ -93,7 +93,7 @@ function ReleaseCard({
   onAddToWantlist: (releaseId: number) => void;
 }) {
   return (
-    <div className="flex gap-3 p-3 rounded-lg bg-muted hover:bg-muted/80 transition-all group border border-border">
+    <div className="flex gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg bg-muted hover:bg-muted/80 transition-all group border border-border overflow-hidden">
       <a
         href={`https://www.discogs.com/master/${release.masterId}`}
         target="_blank"
@@ -104,10 +104,10 @@ function ReleaseCard({
           <img
             src={release.thumb}
             alt={release.title}
-            className="w-14 h-14 rounded object-cover flex-shrink-0"
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded object-cover flex-shrink-0"
           />
         ) : (
-          <div className="w-14 h-14 rounded bg-muted flex items-center justify-center flex-shrink-0">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded bg-muted flex items-center justify-center flex-shrink-0">
             <svg
               className="w-6 h-6 text-muted-foreground"
               fill="none"
@@ -128,7 +128,7 @@ function ReleaseCard({
           </p>
           <div className="flex items-center gap-2 mt-1">
             {release.similarTo ? (
-              <span className="text-xs text-primary">
+              <span className="text-xs text-primary truncate">
                 Similar to {release.similarTo}
               </span>
             ) : (
@@ -154,7 +154,7 @@ function ReleaseCard({
             }
           }}
           disabled={wantlistStatus === "loading" || wantlistStatus === "added"}
-          className={`p-2 rounded-md transition-all ${
+          className={`p-1.5 sm:p-2 rounded-md transition-all ${
             wantlistStatus === "added"
               ? "bg-green-500/20 text-green-500 cursor-default"
               : wantlistStatus === "loading"
@@ -175,7 +175,7 @@ function ReleaseCard({
         >
           {wantlistStatus === "loading" ? (
             <svg
-              className="w-5 h-5 animate-spin"
+              className="w-4 h-4 sm:w-5 sm:h-5 animate-spin"
               fill="none"
               viewBox="0 0 24 24"
             >
@@ -195,7 +195,7 @@ function ReleaseCard({
             </svg>
           ) : wantlistStatus === "added" ? (
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4 sm:w-5 sm:h-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -209,7 +209,7 @@ function ReleaseCard({
             </svg>
           ) : (
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4 sm:w-5 sm:h-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -227,7 +227,7 @@ function ReleaseCard({
           href={`https://www.discogs.com/master/${release.masterId}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="p-2 rounded-md bg-muted text-muted-foreground hover:bg-primary/20 hover:text-primary transition-all"
+          className="hidden sm:flex p-2 rounded-md bg-muted text-muted-foreground hover:bg-primary/20 hover:text-primary transition-all"
           title="View on Discogs"
         >
           <svg
@@ -445,19 +445,19 @@ export function Recommendations({ releases, isLoading }: RecommendationsProps) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full min-w-0 overflow-hidden">
       {/* Header */}
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <div>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="min-w-0 flex-1">
               <CardTitle>Smart Recommendations</CardTitle>
-              <CardDescription>
+              <CardDescription className="break-words">
                 {recommendations?.hasLastfm
-                  ? "Based on similar artists from Last.fm and your collection styles"
+                  ? "Based on Last.fm similar artists"
                   : "Based on your collection styles"}
                 {fromCache && (
-                  <span className="ml-2 text-xs text-muted-foreground/70">(cached)</span>
+                  <span className="ml-1 text-xs text-muted-foreground/70">(cached)</span>
                 )}
               </CardDescription>
             </div>
@@ -522,7 +522,7 @@ export function Recommendations({ releases, isLoading }: RecommendationsProps) {
       )}
 
       {loading && !recommendations && (
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid lg:grid-cols-2 gap-6">
           {[...Array(4)].map((_, i) => (
             <Card key={i}>
               <CardHeader>
@@ -545,17 +545,17 @@ export function Recommendations({ releases, isLoading }: RecommendationsProps) {
         <>
           {/* Analyzed styles indicator */}
           {recommendations.analyzedStyles.length > 0 && (
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-sm text-muted-foreground">
+            <div className="flex items-center gap-2 overflow-x-auto pb-2 -mb-2">
+              <span className="text-sm text-muted-foreground whitespace-nowrap flex-shrink-0">
                 Analyzing styles:
               </span>
               {recommendations.analyzedStyles.map((style) => (
-                <Badge key={style} variant="secondary">
+                <Badge key={style} variant="secondary" className="flex-shrink-0">
                   {style}
                 </Badge>
               ))}
               {recommendations.hasLastfm && (
-                <Badge variant="outline" className="border-primary/30 text-primary">
+                <Badge variant="outline" className="border-primary/30 text-primary flex-shrink-0">
                   + Last.fm
                 </Badge>
               )}
@@ -563,14 +563,14 @@ export function Recommendations({ releases, isLoading }: RecommendationsProps) {
           )}
 
           {/* Recommendation cards */}
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid lg:grid-cols-2 gap-6 w-full min-w-0">
             {recommendations.recommendations.map((rec) => (
-              <Card key={rec.style}>
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center gap-2">
+              <Card key={rec.style} className="overflow-hidden w-full min-w-0">
+                <CardHeader className="min-w-0 w-full">
+                  <CardTitle className="text-lg">
                     {rec.style}
                   </CardTitle>
-                  <CardDescription>
+                  <CardDescription className="whitespace-normal break-words w-full">
                     {rec.reason}
                   </CardDescription>
                 </CardHeader>

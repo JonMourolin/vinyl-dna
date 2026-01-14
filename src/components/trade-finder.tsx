@@ -308,14 +308,14 @@ export function TradeFinder({
           {/* Summary */}
           <Card className="bg-gradient-to-r from-primary/10 to-secondary/10">
             <CardContent className="py-6">
-              <div className="flex justify-center gap-8">
+              <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-8">
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-green-500">{result.youCanOffer.length}</p>
+                  <p className="text-xl md:text-3xl font-bold text-green-500">{result.youCanOffer.length}</p>
                   <p className="text-sm text-muted-foreground">You can offer</p>
                 </div>
                 <div className="flex items-center">
                   <svg
-                    className="w-8 h-8 text-muted-foreground"
+                    className="w-6 h-6 sm:w-8 sm:h-8 text-muted-foreground rotate-90 sm:rotate-0"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -329,7 +329,7 @@ export function TradeFinder({
                   </svg>
                 </div>
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-primary">{result.theyCanOffer.length}</p>
+                  <p className="text-xl md:text-3xl font-bold text-primary">{result.theyCanOffer.length}</p>
                   <p className="text-sm text-muted-foreground">They can offer</p>
                 </div>
               </div>
@@ -354,10 +354,10 @@ export function TradeFinder({
             <CardContent>
               {result.youCanOffer.length === 0 ? (
                 <p className="text-muted-foreground text-center py-4">
-                  You don't have any records that {result.friendUsername} wants.
+                  You don&apos;t have any records that {result.friendUsername} wants.
                 </p>
               ) : (
-                <div className="grid sm:grid-cols-2 gap-3 max-h-[400px] overflow-y-auto">
+                <div className="grid sm:grid-cols-2 gap-3 max-h-[300px] md:max-h-[400px] overflow-y-auto">
                   {result.youCanOffer.map((opportunity) => (
                     <TradeCard
                       key={opportunity.release.instance_id}
@@ -387,10 +387,10 @@ export function TradeFinder({
             <CardContent>
               {result.theyCanOffer.length === 0 ? (
                 <p className="text-muted-foreground text-center py-4">
-                  {result.friendUsername} doesn't have any records from your wantlist.
+                  {result.friendUsername} doesn&apos;t have any records from your wantlist.
                 </p>
               ) : (
-                <div className="grid sm:grid-cols-2 gap-3 max-h-[400px] overflow-y-auto">
+                <div className="grid sm:grid-cols-2 gap-3 max-h-[300px] md:max-h-[400px] overflow-y-auto">
                   {result.theyCanOffer.map((opportunity) => (
                     <TradeCard
                       key={opportunity.release.instance_id}
