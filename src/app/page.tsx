@@ -1,21 +1,74 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export default function Home() {
   return (
     <main className="min-h-screen flex flex-col lg:flex-row bg-background">
-      {/* LEFT PANEL - Visual/Brand (full bleed) */}
-      <div
-        className="lg:w-1/2 min-h-[40vh] lg:min-h-screen relative overflow-hidden"
-        style={{
-          backgroundImage: `url('https://images.pexels.com/photos/2117243/pexels-photo-2117243.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        {/* Dark overlay for better contrast */}
-        <div className="absolute inset-0 bg-black/20" />
+      {/* LEFT PANEL - Floating Constellation */}
+      <div className="lg:w-1/2 min-h-[40vh] lg:min-h-screen relative overflow-hidden bg-zinc-900">
+        {/* Animated background gradients */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 -left-20 w-80 h-80 bg-[#e57373]/20 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-1/3 right-0 w-64 h-64 bg-[#e57373]/10 rounded-full blur-2xl animate-pulse [animation-delay:1s]" />
+          <div className="absolute top-1/2 left-1/3 w-48 h-48 bg-zinc-700/30 rounded-full blur-xl animate-pulse [animation-delay:2s]" />
+        </div>
+
+        {/* Floating illustrations */}
+        <div className="relative w-full h-full flex items-center justify-center">
+          {/* Main floating illustration */}
+          <div className="relative animate-float">
+            <Image
+              src="/illustrations.png"
+              alt="Vinyl collection analysis"
+              width={600}
+              height={300}
+              className="w-[85%] max-w-lg mx-auto h-auto object-contain drop-shadow-2xl"
+              priority
+            />
+          </div>
+
+          {/* Small decorative floating vinyl elements */}
+          <div className="absolute top-16 right-12 w-12 h-12 opacity-20 animate-float-slow">
+            <div className="w-full h-full rounded-full border-2 border-white/40">
+              <div className="absolute inset-1/3 rounded-full bg-[#e57373]/60" />
+            </div>
+          </div>
+          <div className="absolute bottom-20 left-8 w-8 h-8 opacity-15 animate-float-reverse">
+            <div className="w-full h-full rounded-full border border-white/30">
+              <div className="absolute inset-1/3 rounded-full bg-[#e57373]/40" />
+            </div>
+          </div>
+          <div className="absolute top-1/3 left-6 w-6 h-6 opacity-10 animate-float-slow">
+            <div className="w-full h-full rounded-full border border-white/20" />
+          </div>
+        </div>
+
+        {/* Custom animations */}
+        <style jsx>{`
+          @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+          }
+          @keyframes float-slow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+          }
+          @keyframes float-reverse {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(15px); }
+          }
+          .animate-float {
+            animation: float 6s ease-in-out infinite;
+          }
+          .animate-float-slow {
+            animation: float-slow 8s ease-in-out infinite;
+          }
+          .animate-float-reverse {
+            animation: float-reverse 7s ease-in-out infinite;
+          }
+        `}</style>
       </div>
 
       {/* RIGHT PANEL - Login/Form */}
