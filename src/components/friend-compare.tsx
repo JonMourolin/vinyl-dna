@@ -175,21 +175,40 @@ function calculateStyleCompatibility(
 function ReleaseCard({ release }: { release: DiscogsRelease }) {
   const info = release.basic_information;
   return (
-    <div className="flex gap-3 p-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors border border-border">
-      {info.thumb && (
-        <img
-          src={info.thumb}
-          alt={info.title}
-          className="w-12 h-12 rounded object-cover flex-shrink-0"
-        />
-      )}
-      <div className="min-w-0 flex-1">
-        <p className="font-medium text-foreground truncate">{info.title}</p>
-        <p className="text-sm text-muted-foreground truncate">
-          {info.artists?.map((a) => a.name).join(", ")} • {info.year || "N/A"}
-        </p>
+    <a
+      href={`https://www.discogs.com/release/${info.id}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block"
+    >
+      <div className="flex gap-3 p-3 rounded-lg bg-muted hover:bg-muted/80 transition-all group border border-border overflow-hidden">
+        {info.thumb ? (
+          <img
+            src={info.thumb}
+            alt={info.title}
+            className="w-12 h-12 rounded object-cover flex-shrink-0"
+          />
+        ) : (
+          <div className="w-12 h-12 rounded bg-muted flex items-center justify-center flex-shrink-0">
+            <svg
+              className="w-6 h-6 text-muted-foreground"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+          </div>
+        )}
+        <div className="min-w-0 flex-1">
+          <p className="font-medium text-foreground truncate group-hover:text-primary transition-colors">{info.title}</p>
+          <p className="text-sm text-muted-foreground truncate">
+            {info.artists?.map((a) => a.name).join(", ")} • {info.year || "N/A"}
+          </p>
+        </div>
       </div>
-    </div>
+    </a>
   );
 }
 
@@ -202,7 +221,7 @@ function TradeCard({ opportunity }: { opportunity: TradeOpportunity }) {
       rel="noopener noreferrer"
       className="block"
     >
-      <div className="flex gap-3 p-3 rounded-lg bg-muted hover:bg-muted/80 transition-all hover:scale-[1.02] border border-border">
+      <div className="flex gap-3 p-3 rounded-lg bg-muted hover:bg-muted/80 transition-all group border border-border overflow-hidden">
         {info.thumb ? (
           <img
             src={info.thumb}
@@ -223,7 +242,7 @@ function TradeCard({ opportunity }: { opportunity: TradeOpportunity }) {
           </div>
         )}
         <div className="min-w-0 flex-1">
-          <p className="font-medium text-foreground truncate">{info.title}</p>
+          <p className="font-medium text-foreground truncate group-hover:text-primary transition-colors">{info.title}</p>
           <p className="text-sm text-muted-foreground truncate">
             {info.artists?.map((a) => a.name).join(", ")} {info.year ? `• ${info.year}` : ""}
           </p>
