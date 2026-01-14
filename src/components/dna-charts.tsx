@@ -193,6 +193,7 @@ export function DNACharts({ releases }: DNAChartsProps) {
                         strokeWidth={2}
                       />
                       <Tooltip
+                        cursor={false}
                         contentStyle={{
                           background: "var(--popover)",
                           border: "1px solid var(--border)",
@@ -200,11 +201,26 @@ export function DNACharts({ releases }: DNAChartsProps) {
                           boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
                           color: "var(--popover-foreground)",
                         }}
-                        formatter={(_, __, props) => {
-                          const { actualPercent, count } = props.payload;
-                          return [`${actualPercent}% (${count} releases)`, ""];
+                        content={({ active, payload }) => {
+                          if (!active || !payload?.[0]) return null;
+                          const data = payload[0].payload;
+                          return (
+                            <div style={{
+                              background: "var(--popover)",
+                              border: "1px solid var(--border)",
+                              borderRadius: "8px",
+                              padding: "8px 12px",
+                              boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                            }}>
+                              <p style={{ color: "var(--popover-foreground)", margin: 0, fontWeight: 500 }}>
+                                {data.genre}
+                              </p>
+                              <p style={{ color: "var(--chart-1)", margin: 0 }}>
+                                <strong>{data.actualPercent}%</strong> ({data.count} releases)
+                              </p>
+                            </div>
+                          );
                         }}
-                        labelFormatter={(label) => label}
                       />
                     </RadarChart>
                   );
@@ -244,14 +260,26 @@ export function DNACharts({ releases }: DNAChartsProps) {
                     axisLine={false}
                   />
                   <Tooltip
-                    contentStyle={{
-                      background: "var(--popover)",
-                      border: "1px solid var(--border)",
-                      borderRadius: "8px",
-                      boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
-                      color: "var(--popover-foreground)",
+                    cursor={false}
+                    content={({ active, payload, label }) => {
+                      if (!active || !payload?.[0]) return null;
+                      return (
+                        <div style={{
+                          background: "var(--popover)",
+                          border: "1px solid var(--border)",
+                          borderRadius: "8px",
+                          padding: "8px 12px",
+                          boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                        }}>
+                          <p style={{ color: "var(--popover-foreground)", margin: 0, fontWeight: 500 }}>
+                            {label}
+                          </p>
+                          <p style={{ color: "var(--chart-1)", margin: 0 }}>
+                            {payload[0].value} releases
+                          </p>
+                        </div>
+                      );
                     }}
-                    formatter={(value) => [`${value} releases`, "Count"]}
                   />
                   <Area
                     type="monotone"
@@ -330,44 +358,44 @@ export function DNACharts({ releases }: DNAChartsProps) {
         </Card>
 
         {/* Oddities & Pressings */}
-        <Card>
+        <Card className="flex flex-col">
           <CardHeader>
             <CardTitle>Oddities & Pressings</CardTitle>
             <CardDescription>
               Rare formats and pressing breakdown
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-5 gap-3">
-              <div className="text-center p-3 rounded-lg bg-chart-1/10 border border-chart-1/20">
-                <p className="text-2xl font-bold text-chart-1">
+          <CardContent className="flex-1 flex">
+            <div className="flex gap-3 flex-1">
+              <div className="flex-1 flex flex-col items-center justify-center p-4 rounded-lg bg-chart-1/10 border border-chart-1/20">
+                <p className="text-4xl font-bold text-chart-1">
                   {analysis.oddities.testPressings}
                 </p>
-                <p className="text-xs text-muted-foreground">Test Pressings</p>
+                <p className="text-sm text-muted-foreground mt-2">Test Pressings</p>
               </div>
-              <div className="text-center p-3 rounded-lg bg-chart-2/10 border border-chart-2/20">
-                <p className="text-2xl font-bold text-chart-2">
+              <div className="flex-1 flex flex-col items-center justify-center p-4 rounded-lg bg-chart-2/10 border border-chart-2/20">
+                <p className="text-4xl font-bold text-chart-2">
                   {analysis.oddities.promos}
                 </p>
-                <p className="text-xs text-muted-foreground">Promos</p>
+                <p className="text-sm text-muted-foreground mt-2">Promos</p>
               </div>
-              <div className="text-center p-3 rounded-lg bg-chart-3/10 border border-chart-3/20">
-                <p className="text-2xl font-bold text-chart-3">
+              <div className="flex-1 flex flex-col items-center justify-center p-4 rounded-lg bg-chart-3/10 border border-chart-3/20">
+                <p className="text-4xl font-bold text-chart-3">
                   {analysis.oddities.limited}
                 </p>
-                <p className="text-xs text-muted-foreground">Limited</p>
+                <p className="text-sm text-muted-foreground mt-2">Limited</p>
               </div>
-              <div className="text-center p-3 rounded-lg bg-chart-4/10 border border-chart-4/20">
-                <p className="text-2xl font-bold text-chart-4">
+              <div className="flex-1 flex flex-col items-center justify-center p-4 rounded-lg bg-chart-4/10 border border-chart-4/20">
+                <p className="text-4xl font-bold text-chart-4">
                   {analysis.totalReleases - analysis.represses}
                 </p>
-                <p className="text-xs text-muted-foreground">Originals</p>
+                <p className="text-sm text-muted-foreground mt-2">Originals</p>
               </div>
-              <div className="text-center p-3 rounded-lg bg-chart-5/10 border border-chart-5/20">
-                <p className="text-2xl font-bold text-chart-5">
+              <div className="flex-1 flex flex-col items-center justify-center p-4 rounded-lg bg-chart-5/10 border border-chart-5/20">
+                <p className="text-4xl font-bold text-chart-5">
                   {analysis.represses}
                 </p>
-                <p className="text-xs text-muted-foreground">Represses</p>
+                <p className="text-sm text-muted-foreground mt-2">Represses</p>
               </div>
             </div>
           </CardContent>

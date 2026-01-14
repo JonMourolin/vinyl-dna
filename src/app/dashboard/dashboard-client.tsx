@@ -94,14 +94,6 @@ const LogoutIcon = () => (
   </svg>
 );
 
-const VinylIcon = () => (
-  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-    <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="1.5" />
-    <circle cx="12" cy="12" r="3" />
-    <circle cx="12" cy="12" r="6" fill="none" stroke="currentColor" strokeWidth="0.5" opacity="0.5" />
-  </svg>
-);
-
 export function DashboardClient({ username, avatarUrl, expectedTotal }: DashboardClientProps) {
   const [collection, setCollection] = useState<CollectionData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -315,7 +307,6 @@ export function DashboardClient({ username, avatarUrl, expectedTotal }: Dashboar
                 <StatCard
                   label="Total Releases"
                   value={loading ? "-" : String(collection?.total || 0)}
-                  icon={<VinylIcon />}
                   loading={loading}
                 />
                 <StatCard
@@ -407,42 +398,29 @@ function StatCard({
   label,
   value,
   sublabel,
-  icon,
   loading,
 }: {
   label: string;
   value: string;
   sublabel?: string;
-  icon?: React.ReactNode;
   loading?: boolean;
 }) {
   return (
-    <Card className="border border-border bg-gradient-to-br from-card to-card/50">
-      <CardContent className="px-4 py-3">
-        {/* Header: Label left, Badge right */}
-        <div className="flex items-center justify-between mb-1">
-          <p className="text-xs font-medium text-primary">{label}</p>
-          {sublabel && !loading && (
-            <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-md">
-              {sublabel}
-            </span>
-          )}
-        </div>
-        {/* Value with optional icon */}
-        <div className="flex items-center gap-2">
-          {icon && (
-            <div className="p-1 rounded-md bg-muted text-muted-foreground flex-shrink-0">
-              {icon}
-            </div>
-          )}
-          {loading ? (
-            <Skeleton className="h-6 w-20" />
-          ) : (
-            <p className="text-xl font-bold text-foreground truncate">{value}</p>
-          )}
-        </div>
-      </CardContent>
-    </Card>
+    <div className="border border-border bg-gradient-to-br from-card to-card/50 rounded-lg px-3 py-1.5">
+      <div className="flex items-center justify-between">
+        <p className="text-xs font-medium text-primary">{label}</p>
+        {sublabel && !loading && (
+          <span className="text-xs font-medium text-primary bg-primary/10 px-1.5 py-0.5 rounded">
+            {sublabel}
+          </span>
+        )}
+      </div>
+      {loading ? (
+        <Skeleton className="h-5 w-16" />
+      ) : (
+        <p className="text-lg font-bold text-foreground truncate">{value}</p>
+      )}
+    </div>
   );
 }
 
