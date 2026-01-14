@@ -15,11 +15,14 @@ import {
   PolarGrid,
   PolarAngleAxis,
   PolarRadiusAxis,
+  RadialBarChart,
+  RadialBar,
   BarChart,
   Bar,
   XAxis,
   YAxis,
   Tooltip,
+  Legend,
   ResponsiveContainer,
 } from "recharts";
 import type { DiscogsRelease } from "@/lib/discogs";
@@ -221,31 +224,57 @@ export function DNACharts({ releases }: DNAChartsProps) {
           <CardContent>
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={analysis.decades} layout="vertical">
-                  <XAxis type="number" stroke="var(--muted-foreground)" fontSize={12} />
-                  <YAxis
-                    type="category"
-                    dataKey="name"
-                    stroke="var(--muted-foreground)"
-                    width={60}
-                    fontSize={12}
-                  />
-                  <Tooltip
-                    contentStyle={{
-                      background: "var(--popover)",
-                      border: "1px solid var(--border)",
-                      borderRadius: "8px",
-                      boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
-                      color: "var(--popover-foreground)",
-                    }}
-                  />
-                  <Bar
-                    dataKey="value"
-                    fill="#E8786B"
-                    radius={[0, 4, 4, 0]}
-                  />
-                </BarChart>
+                {(() => {
+                  const maxValue = Math.max(...analysis.decades.map((d) => d.value));
+                  const radialData = analysis.decades.map((d, i) => ({
+                    ...d,
+                    fill: `var(--chart-${(i % 5) + 1})`,
+                    percent: Math.round((d.value / maxValue) * 100),
+                  }));
+                  return (
+                    <RadialBarChart
+                      cx="50%"
+                      cy="50%"
+                      innerRadius="20%"
+                      outerRadius="85%"
+                      data={radialData}
+                      startAngle={90}
+                      endAngle={-90}
+                    >
+                      <RadialBar
+                        background={{ fill: "var(--muted)" }}
+                        dataKey="percent"
+                        cornerRadius={4}
+                      />
+                      <Tooltip
+                        contentStyle={{
+                          background: "var(--popover)",
+                          border: "1px solid var(--border)",
+                          borderRadius: "8px",
+                          boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                          color: "var(--popover-foreground)",
+                        }}
+                        formatter={(_, __, props) => {
+                          const { name, value } = props.payload;
+                          return [`${value} releases`, name];
+                        }}
+                      />
+                    </RadialBarChart>
+                  );
+                })()}
               </ResponsiveContainer>
+              {/* Legend */}
+              <div className="flex flex-wrap justify-center gap-3 mt-2">
+                {analysis.decades.map((d, i) => (
+                  <div key={d.name} className="flex items-center gap-1.5 text-xs">
+                    <div
+                      className="w-2.5 h-2.5 rounded-sm"
+                      style={{ backgroundColor: `var(--chart-${(i % 5) + 1})` }}
+                    />
+                    <span className="text-muted-foreground">{d.name} ({d.value})</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </CardContent>
         </Card>
