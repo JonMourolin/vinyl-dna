@@ -5,6 +5,18 @@ All notable changes to DeepCogs will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.9] - 2026-01-14
+
+### Added
+- **Footer**: Minimalist copyright footer on all pages
+- **Disc3 Icons**: New icons and radar chart gradient styling
+
+### Fixed
+- **Trade Cards**: Unified hover effects with discover page
+- **Friend Comparison**: Changed friend color to green for better contrast
+
+---
+
 ## [0.6.8] - 2026-01-14
 
 ### Fixed
@@ -221,6 +233,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.6.9 | 2026-01-14 | Footer, Disc3 icons, trade card hover fix, friend comparison color |
+| 0.6.8 | 2026-01-14 | Mobile style badges wrap, oddities stat boxes |
 | 0.6.7 | 2026-01-14 | Albums In Common in Compare, teal friend color, velvet scrollbar |
 | 0.6.6 | 2026-01-14 | Velvet coral chart colors, cleaner tooltips, compact stat cards |
 | 0.6.5 | 2026-01-14 | Radar chart, area chart, stat card redesign, progress bar, tooltip |
