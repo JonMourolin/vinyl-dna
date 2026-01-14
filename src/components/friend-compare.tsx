@@ -593,7 +593,7 @@ export function FriendCompare({
                   <span className="text-xs text-muted-foreground">You</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-secondary" />
+                  <div className="w-3 h-3 rounded-full bg-friend" />
                   <span className="text-xs text-muted-foreground">{result.friendUsername}</span>
                 </div>
               </div>
@@ -607,7 +607,7 @@ export function FriendCompare({
                       <span className="text-xs text-muted-foreground">
                         <span className="text-primary">{s.myPercent.toFixed(0)}%</span>
                         {" / "}
-                        <span className="text-muted-foreground">{s.friendPercent.toFixed(0)}%</span>
+                        <span className="text-friend">{s.friendPercent.toFixed(0)}%</span>
                       </span>
                     </div>
                     <div className="flex h-1.5 rounded-full overflow-hidden bg-muted">
@@ -618,7 +618,7 @@ export function FriendCompare({
                         }}
                       />
                       <div
-                        className="bg-secondary"
+                        className="bg-friend"
                         style={{
                           width: `${(s.friendPercent / (s.myPercent + s.friendPercent || 1)) * 100}%`,
                         }}
