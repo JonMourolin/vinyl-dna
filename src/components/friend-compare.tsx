@@ -424,18 +424,19 @@ export function FriendCompare({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <Input
               placeholder="Enter Discogs username"
               value={friendUsername}
               onChange={(e) => setFriendUsername(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               disabled={searching}
-              className="max-w-xs"
+              className="w-full sm:max-w-xs"
             />
             <Button
               onClick={handleSearch}
               disabled={searching || !friendUsername.trim()}
+              className="w-full sm:w-auto whitespace-nowrap"
             >
               {searching ? (
                 <>
@@ -479,7 +480,7 @@ export function FriendCompare({
             <Card className="bg-gradient-to-br from-primary/10 to-secondary/10 border-primary/20">
               <CardContent className="pt-6 pb-6">
                 <div className="text-center">
-                  <div className="text-5xl font-bold text-primary mb-1">
+                  <div className="text-3xl md:text-5xl font-bold text-primary mb-1">
                     {result.styleCompatibility.score}%
                   </div>
                   <p className="text-sm text-muted-foreground">
@@ -523,12 +524,12 @@ export function FriendCompare({
 
                   {result.styleCompatibility.topOverlaps.length > 0 && (
                     <>
-                      <p className="text-xs text-muted-foreground mb-1 font-medium">Biggest shared preferences:</p>
+                      <p className="text-xs text-muted-foreground mb-1 font-medium">Shared preferences:</p>
                       <div className="text-xs text-muted-foreground/80 space-y-0.5 mb-3">
                         {result.styleCompatibility.topOverlaps.map((o) => (
-                          <div key={o.style} className="flex justify-between">
-                            <span>{o.style}</span>
-                            <span className="text-primary">{o.overlap}% of match</span>
+                          <div key={o.style} className="flex justify-between gap-2">
+                            <span className="truncate">{o.style}</span>
+                            <span className="text-primary whitespace-nowrap flex-shrink-0">{o.overlap}%</span>
                           </div>
                         ))}
                       </div>
@@ -540,9 +541,9 @@ export function FriendCompare({
                       <p className="text-xs text-muted-foreground mb-1 font-medium">Biggest differences:</p>
                       <div className="text-xs text-muted-foreground/80 space-y-0.5">
                         {result.styleCompatibility.biggestDifferences.map((d) => (
-                          <div key={d.style} className="flex justify-between">
-                            <span>{d.style}</span>
-                            <span className="text-muted-foreground/60">
+                          <div key={d.style} className="flex justify-between gap-2">
+                            <span className="truncate">{d.style}</span>
+                            <span className="text-muted-foreground/60 whitespace-nowrap flex-shrink-0">
                               <span className="text-primary">{d.myPercent.toFixed(0)}%</span>
                               {" vs "}
                               <span>{d.friendPercent.toFixed(0)}%</span>
@@ -569,7 +570,7 @@ export function FriendCompare({
                     No overlapping albums found
                   </p>
                 ) : (
-                  <div className="h-[360px] overflow-y-auto space-y-2 scrollbar-velvet">
+                  <div className="h-[280px] md:h-[360px] overflow-y-auto space-y-2 scrollbar-velvet">
                     {result.overlap.slice(0, 50).map((release) => (
                       <ReleaseCard key={release.instance_id} release={release} />
                     ))}
@@ -602,9 +603,9 @@ export function FriendCompare({
               <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3">
                 {result.styleCompatibility.styleComparison.map((s) => (
                   <div key={s.style} className="space-y-1">
-                    <div className="flex justify-between text-sm">
-                      <span className="font-medium text-foreground">{s.style}</span>
-                      <span className="text-xs text-muted-foreground">
+                    <div className="flex justify-between text-sm gap-2">
+                      <span className="font-medium text-foreground truncate">{s.style}</span>
+                      <span className="text-xs text-muted-foreground whitespace-nowrap flex-shrink-0">
                         <span className="text-primary">{s.myPercent.toFixed(0)}%</span>
                         {" / "}
                         <span className="text-friend">{s.friendPercent.toFixed(0)}%</span>

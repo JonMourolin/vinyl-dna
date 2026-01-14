@@ -94,6 +94,18 @@ const LogoutIcon = () => (
   </svg>
 );
 
+const MenuIcon = () => (
+  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+  </svg>
+);
+
+const CloseIcon = () => (
+  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+  </svg>
+);
+
 export function DashboardClient({ username, avatarUrl, expectedTotal }: DashboardClientProps) {
   const [collection, setCollection] = useState<CollectionData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -101,6 +113,7 @@ export function DashboardClient({ username, avatarUrl, expectedTotal }: Dashboar
   const [error, setError] = useState<string | null>(null);
   const [fromCache, setFromCache] = useState(false);
   const [activeTab, setActiveTab] = useState<TabValue>("dna");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const fetchPage = useCallback(async (page: number, existingReleases: DiscogsRelease[] = []) => {
     const response = await fetch(`/api/collection?username=${username}&page=${page}`);
@@ -169,17 +182,35 @@ export function DashboardClient({ username, avatarUrl, expectedTotal }: Dashboar
   ];
 
   return (
-    <div className="min-h-screen flex bg-background">
+    <div className="min-h-screen flex bg-background overflow-x-hidden">
+      {/* Mobile sidebar backdrop */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-64 bg-sidebar border-r border-sidebar-border flex flex-col fixed h-screen">
-        {/* Logo */}
+      <aside className={`w-64 bg-sidebar border-r border-sidebar-border flex flex-col fixed h-screen z-50 transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      }`}>
+        {/* Logo + Mobile close button */}
         <div className="p-6 border-b border-sidebar-border">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">D</span>
-            </div>
-            <span className="font-semibold text-lg text-sidebar-foreground">DeepCogs</span>
-          </Link>
+          <div className="flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
+                <span className="text-primary-foreground font-bold text-sm">D</span>
+              </div>
+              <span className="font-semibold text-lg text-sidebar-foreground">DeepCogs</span>
+            </Link>
+            <button
+              onClick={() => setSidebarOpen(false)}
+              className="lg:hidden p-1.5 rounded-md text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
+            >
+              <CloseIcon />
+            </button>
+          </div>
         </div>
 
         {/* User */}
@@ -233,7 +264,10 @@ export function DashboardClient({ username, avatarUrl, expectedTotal }: Dashboar
             {navItems.map((item) => (
               <li key={item.id}>
                 <button
-                  onClick={() => setActiveTab(item.id)}
+                  onClick={() => {
+                    setActiveTab(item.id);
+                    setSidebarOpen(false);
+                  }}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                     activeTab === item.id
                       ? "bg-sidebar-primary text-sidebar-primary-foreground"
@@ -264,25 +298,36 @@ export function DashboardClient({ username, avatarUrl, expectedTotal }: Dashboar
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 ml-64">
+      <main className="flex-1 ml-0 lg:ml-64 min-w-0 overflow-hidden">
         {/* Header */}
         <header className="bg-card border-b border-border sticky top-0 z-10">
-          <div className="px-8 py-6">
-            <h1 className="text-2xl font-semibold text-foreground">
-              {activeTab === "dna" && "Collection DNA"}
-              {activeTab === "compare" && "Compare Collections"}
-              {activeTab === "discover" && "Discover New Music"}
-            </h1>
-            <p className="text-sm text-muted-foreground mt-1">
-              {activeTab === "dna" && "Analyze the patterns in your vinyl collection"}
-              {activeTab === "compare" && "Find overlaps and trade opportunities with friends"}
-              {activeTab === "discover" && "Get personalized recommendations based on your taste"}
-            </p>
+          <div className="px-4 md:px-8 py-4 md:py-6">
+            <div className="flex items-center gap-4">
+              {/* Mobile hamburger menu */}
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="lg:hidden p-2 -ml-2 rounded-md text-foreground/70 hover:text-foreground hover:bg-accent transition-colors"
+              >
+                <MenuIcon />
+              </button>
+              <div>
+                <h1 className="text-xl md:text-2xl font-semibold text-foreground">
+                  {activeTab === "dna" && "Collection DNA"}
+                  {activeTab === "compare" && "Compare Collections"}
+                  {activeTab === "discover" && "Discover New Music"}
+                </h1>
+                <p className="text-sm text-muted-foreground mt-1 hidden sm:block">
+                  {activeTab === "dna" && "Analyze the patterns in your vinyl collection"}
+                  {activeTab === "compare" && "Find overlaps and trade opportunities with friends"}
+                  {activeTab === "discover" && "Get personalized recommendations based on your taste"}
+                </p>
+              </div>
+            </div>
           </div>
         </header>
 
         {/* Content */}
-        <div className="p-8">
+        <div className="p-4 md:p-8 min-w-0 overflow-hidden">
           {error && (
             <Card className="mb-6 border-red-200 bg-red-50">
               <CardContent className="py-4">

@@ -160,7 +160,7 @@ export function DNACharts({ releases }: DNAChartsProps) {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px]">
+            <div className="h-[220px] md:h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 {(() => {
                   // Square root scale: compresses high values, expands low values
@@ -237,7 +237,7 @@ export function DNACharts({ releases }: DNAChartsProps) {
             <CardDescription>When your music was released</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px]">
+            <div className="h-[220px] md:h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={analysis.decades}>
                   <defs>
@@ -335,7 +335,7 @@ export function DNACharts({ releases }: DNAChartsProps) {
               {analysis.labels.slice(0, 8).map((label, index) => (
                 <div key={label.name} className="space-y-1">
                   <div className="flex justify-between text-sm">
-                    <span className="font-medium text-foreground truncate max-w-[200px]">
+                    <span className="font-medium text-foreground truncate max-w-[120px] sm:max-w-[200px]">
                       {label.name}
                     </span>
                     <span className="text-muted-foreground">
@@ -365,37 +365,37 @@ export function DNACharts({ releases }: DNAChartsProps) {
               Rare formats and pressing breakdown
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex-1 flex">
-            <div className="flex gap-3 flex-1">
-              <div className="flex-1 flex flex-col items-center justify-center p-4 rounded-lg bg-chart-1/10 border border-chart-1/20">
-                <p className="text-4xl font-bold text-chart-1">
+          <CardContent className="flex-1">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+              <div className="flex flex-col items-center justify-center p-3 md:p-4 rounded-lg bg-chart-1/10 border border-chart-1/20">
+                <p className="text-2xl md:text-4xl font-bold text-chart-1">
                   {analysis.oddities.testPressings}
                 </p>
-                <p className="text-sm text-muted-foreground mt-2">Test Pressings</p>
+                <p className="text-xs md:text-sm text-muted-foreground mt-1 md:mt-2 text-center">Test Pressings</p>
               </div>
-              <div className="flex-1 flex flex-col items-center justify-center p-4 rounded-lg bg-chart-2/10 border border-chart-2/20">
-                <p className="text-4xl font-bold text-chart-2">
+              <div className="flex flex-col items-center justify-center p-3 md:p-4 rounded-lg bg-chart-2/10 border border-chart-2/20">
+                <p className="text-2xl md:text-4xl font-bold text-chart-2">
                   {analysis.oddities.promos}
                 </p>
-                <p className="text-sm text-muted-foreground mt-2">Promos</p>
+                <p className="text-xs md:text-sm text-muted-foreground mt-1 md:mt-2 text-center">Promos</p>
               </div>
-              <div className="flex-1 flex flex-col items-center justify-center p-4 rounded-lg bg-chart-3/10 border border-chart-3/20">
-                <p className="text-4xl font-bold text-chart-3">
+              <div className="flex flex-col items-center justify-center p-3 md:p-4 rounded-lg bg-chart-3/10 border border-chart-3/20">
+                <p className="text-2xl md:text-4xl font-bold text-chart-3">
                   {analysis.oddities.limited}
                 </p>
-                <p className="text-sm text-muted-foreground mt-2">Limited</p>
+                <p className="text-xs md:text-sm text-muted-foreground mt-1 md:mt-2 text-center">Limited</p>
               </div>
-              <div className="flex-1 flex flex-col items-center justify-center p-4 rounded-lg bg-chart-4/10 border border-chart-4/20">
-                <p className="text-4xl font-bold text-chart-4">
+              <div className="flex flex-col items-center justify-center p-3 md:p-4 rounded-lg bg-chart-4/10 border border-chart-4/20">
+                <p className="text-2xl md:text-4xl font-bold text-chart-4">
                   {analysis.totalReleases - analysis.represses}
                 </p>
-                <p className="text-sm text-muted-foreground mt-2">Originals</p>
+                <p className="text-xs md:text-sm text-muted-foreground mt-1 md:mt-2 text-center">Originals</p>
               </div>
-              <div className="flex-1 flex flex-col items-center justify-center p-4 rounded-lg bg-chart-5/10 border border-chart-5/20">
-                <p className="text-4xl font-bold text-chart-5">
+              <div className="flex flex-col items-center justify-center p-3 md:p-4 rounded-lg bg-chart-5/10 border border-chart-5/20 col-span-2 sm:col-span-1">
+                <p className="text-2xl md:text-4xl font-bold text-chart-5">
                   {analysis.represses}
                 </p>
-                <p className="text-sm text-muted-foreground mt-2">Represses</p>
+                <p className="text-xs md:text-sm text-muted-foreground mt-1 md:mt-2 text-center">Represses</p>
               </div>
             </div>
           </CardContent>
