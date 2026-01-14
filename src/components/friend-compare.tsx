@@ -170,7 +170,7 @@ function calculateStyleCompatibility(
 function ReleaseCard({ release }: { release: DiscogsRelease }) {
   const info = release.basic_information;
   return (
-    <div className="flex gap-3 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors border border-gray-100">
+    <div className="flex gap-3 p-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors border border-border">
       {info.thumb && (
         <img
           src={info.thumb}
@@ -179,8 +179,8 @@ function ReleaseCard({ release }: { release: DiscogsRelease }) {
         />
       )}
       <div className="min-w-0 flex-1">
-        <p className="font-medium text-gray-900 truncate">{info.title}</p>
-        <p className="text-sm text-gray-500 truncate">
+        <p className="font-medium text-foreground truncate">{info.title}</p>
+        <p className="text-sm text-muted-foreground truncate">
           {info.artists?.map((a) => a.name).join(", ")} • {info.year || "N/A"}
         </p>
       </div>
@@ -197,7 +197,7 @@ function TradeCard({ opportunity }: { opportunity: TradeOpportunity }) {
       rel="noopener noreferrer"
       className="block"
     >
-      <div className="flex gap-3 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-all hover:scale-[1.02] border border-gray-100">
+      <div className="flex gap-3 p-3 rounded-lg bg-muted hover:bg-muted/80 transition-all hover:scale-[1.02] border border-border">
         {info.thumb ? (
           <img
             src={info.thumb}
@@ -205,9 +205,9 @@ function TradeCard({ opportunity }: { opportunity: TradeOpportunity }) {
             className="w-14 h-14 rounded object-cover flex-shrink-0"
           />
         ) : (
-          <div className="w-14 h-14 rounded bg-gray-100 flex items-center justify-center flex-shrink-0">
+          <div className="w-14 h-14 rounded bg-muted flex items-center justify-center flex-shrink-0">
             <svg
-              className="w-6 h-6 text-gray-400"
+              className="w-6 h-6 text-muted-foreground"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -218,13 +218,13 @@ function TradeCard({ opportunity }: { opportunity: TradeOpportunity }) {
           </div>
         )}
         <div className="min-w-0 flex-1">
-          <p className="font-medium text-gray-900 truncate">{info.title}</p>
-          <p className="text-sm text-gray-500 truncate">
+          <p className="font-medium text-foreground truncate">{info.title}</p>
+          <p className="text-sm text-muted-foreground truncate">
             {info.artists?.map((a) => a.name).join(", ")} {info.year ? `• ${info.year}` : ""}
           </p>
           <div className="flex gap-1 mt-1">
             {info.genres?.slice(0, 2).map((genre) => (
-              <Badge key={genre} variant="secondary" className="text-xs bg-gray-100 text-gray-700">
+              <Badge key={genre} variant="secondary" className="text-xs">
                 {genre}
               </Badge>
             ))}
@@ -378,10 +378,10 @@ export function FriendCompare({
 
   if (myCollectionLoading) {
     return (
-      <Card className="bg-white border-gray-200">
+      <Card>
         <CardHeader>
-          <CardTitle className="text-gray-900">Compare & Trade</CardTitle>
-          <CardDescription className="text-gray-500">Loading your collection first...</CardDescription>
+          <CardTitle>Compare & Trade</CardTitle>
+          <CardDescription>Loading your collection first...</CardDescription>
         </CardHeader>
         <CardContent>
           <Skeleton className="h-10 w-full" />
@@ -393,11 +393,11 @@ export function FriendCompare({
   return (
     <div className="space-y-6">
       {/* Unified Search */}
-      <Card className="bg-white border-gray-200">
+      <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-gray-900">
+          <CardTitle className="flex items-center gap-2">
             <svg
-              className="w-5 h-5 text-amber-600"
+              className="w-5 h-5 text-primary"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -411,9 +411,9 @@ export function FriendCompare({
             </svg>
             Compare & Trade with a Friend
           </CardTitle>
-          <CardDescription className="text-gray-500">
+          <CardDescription>
             Enter a Discogs username to compare collections and find trade opportunities.
-            <span className="block mt-1 text-amber-600">
+            <span className="block mt-1 text-primary">
               Note: Their collection and wantlist must be public.
             </span>
           </CardDescription>
@@ -426,12 +426,11 @@ export function FriendCompare({
               onChange={(e) => setFriendUsername(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               disabled={searching}
-              className="max-w-xs bg-white border-gray-200 text-gray-900 placeholder:text-gray-400"
+              className="max-w-xs"
             />
             <Button
               onClick={handleSearch}
               disabled={searching || !friendUsername.trim()}
-              className="bg-gray-900 text-white hover:bg-gray-800"
             >
               {searching ? (
                 <>
@@ -472,27 +471,27 @@ export function FriendCompare({
           {/* Summary Cards */}
           <div className="grid md:grid-cols-2 gap-6">
             {/* Taste Compatibility */}
-            <Card className="bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200">
+            <Card className="bg-gradient-to-br from-primary/10 to-secondary/10 border-primary/20">
               <CardContent className="pt-6 pb-6">
                 <div className="text-center">
-                  <div className="text-5xl font-bold text-amber-600 mb-1">
+                  <div className="text-5xl font-bold text-primary mb-1">
                     {result.styleCompatibility.score}%
                   </div>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-muted-foreground">
                     Taste Compatibility
                   </p>
                 </div>
 
                 {/* Score explanation */}
-                <div className="mt-4 pt-4 border-t border-amber-200">
-                  <p className="text-xs text-gray-600 mb-2 text-center font-medium">
+                <div className="mt-4 pt-4 border-t border-primary/20">
+                  <p className="text-xs text-muted-foreground mb-2 text-center font-medium">
                     How it works
                   </p>
-                  <p className="text-xs text-gray-500 mb-3 leading-relaxed">
+                  <p className="text-xs text-muted-foreground/80 mb-3 leading-relaxed">
                     Cosine similarity measures the angle between your style vectors.
                     Think of it as: are you pointing in the same direction in music taste?
                   </p>
-                  <div className="text-xs text-gray-400 space-y-0.5 mb-4">
+                  <div className="text-xs text-muted-foreground/60 space-y-0.5 mb-4">
                     <div className="flex justify-between">
                       <span>~90%+</span>
                       <span>Nearly identical taste</span>
@@ -513,12 +512,12 @@ export function FriendCompare({
 
                   {result.styleCompatibility.topOverlaps.length > 0 && (
                     <>
-                      <p className="text-xs text-gray-600 mb-1 font-medium">Biggest shared preferences:</p>
-                      <div className="text-xs text-gray-500 space-y-0.5 mb-3">
+                      <p className="text-xs text-muted-foreground mb-1 font-medium">Biggest shared preferences:</p>
+                      <div className="text-xs text-muted-foreground/80 space-y-0.5 mb-3">
                         {result.styleCompatibility.topOverlaps.map((o) => (
                           <div key={o.style} className="flex justify-between">
                             <span>{o.style}</span>
-                            <span className="text-amber-600">{o.overlap}% of match</span>
+                            <span className="text-primary">{o.overlap}% of match</span>
                           </div>
                         ))}
                       </div>
@@ -527,13 +526,13 @@ export function FriendCompare({
 
                   {result.styleCompatibility.biggestDifferences.length > 0 && (
                     <>
-                      <p className="text-xs text-gray-600 mb-1 font-medium">Biggest differences:</p>
-                      <div className="text-xs text-gray-500 space-y-0.5">
+                      <p className="text-xs text-muted-foreground mb-1 font-medium">Biggest differences:</p>
+                      <div className="text-xs text-muted-foreground/80 space-y-0.5">
                         {result.styleCompatibility.biggestDifferences.map((d) => (
                           <div key={d.style} className="flex justify-between">
                             <span>{d.style}</span>
-                            <span className="text-gray-400">
-                              <span className="text-amber-600">{d.myPercent.toFixed(0)}%</span>
+                            <span className="text-muted-foreground/60">
+                              <span className="text-primary">{d.myPercent.toFixed(0)}%</span>
                               {" vs "}
                               <span>{d.friendPercent.toFixed(0)}%</span>
                             </span>
@@ -547,19 +546,19 @@ export function FriendCompare({
             </Card>
 
             {/* Trade Summary */}
-            <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-gray-200">
+            <Card className="bg-gradient-to-r from-primary/10 to-secondary/10">
               <CardContent className="pt-6 pb-6">
                 <div className="text-center mb-4">
-                  <p className="text-sm font-medium text-gray-600">Trade Opportunities</p>
+                  <p className="text-sm font-medium text-muted-foreground">Trade Opportunities</p>
                 </div>
                 <div className="flex justify-center gap-8">
                   <div className="text-center">
-                    <p className="text-3xl font-bold text-green-600">{result.youCanOffer.length}</p>
-                    <p className="text-xs text-gray-500">You can offer</p>
+                    <p className="text-3xl font-bold text-green-500">{result.youCanOffer.length}</p>
+                    <p className="text-xs text-muted-foreground">You can offer</p>
                   </div>
                   <div className="flex items-center">
                     <svg
-                      className="w-6 h-6 text-gray-400"
+                      className="w-6 h-6 text-muted-foreground"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -573,8 +572,8 @@ export function FriendCompare({
                     </svg>
                   </div>
                   <div className="text-center">
-                    <p className="text-3xl font-bold text-blue-600">{result.theyCanOffer.length}</p>
-                    <p className="text-xs text-gray-500">They can offer</p>
+                    <p className="text-3xl font-bold text-primary">{result.theyCanOffer.length}</p>
+                    <p className="text-xs text-muted-foreground">They can offer</p>
                   </div>
                 </div>
               </CardContent>
@@ -582,21 +581,21 @@ export function FriendCompare({
           </div>
 
           {/* Style Comparison */}
-          <Card className="bg-white border-gray-200">
+          <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-gray-900 text-base">Style Comparison</CardTitle>
-              <CardDescription className="text-gray-500 text-xs">
+              <CardTitle className="text-base">Style Comparison</CardTitle>
+              <CardDescription className="text-xs">
                 How your style preferences compare (% of collection)
               </CardDescription>
               {/* Legend */}
               <div className="flex items-center gap-4 mt-2">
                 <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-amber-500" />
-                  <span className="text-xs text-gray-600">You</span>
+                  <div className="w-3 h-3 rounded-full bg-primary" />
+                  <span className="text-xs text-muted-foreground">You</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-gray-400" />
-                  <span className="text-xs text-gray-600">{result.friendUsername}</span>
+                  <div className="w-3 h-3 rounded-full bg-secondary" />
+                  <span className="text-xs text-muted-foreground">{result.friendUsername}</span>
                 </div>
               </div>
             </CardHeader>
@@ -605,22 +604,22 @@ export function FriendCompare({
                 {result.styleCompatibility.styleComparison.map((s) => (
                   <div key={s.style} className="space-y-1">
                     <div className="flex justify-between text-sm">
-                      <span className="font-medium text-gray-900">{s.style}</span>
-                      <span className="text-xs text-gray-500">
-                        <span className="text-amber-600">{s.myPercent.toFixed(0)}%</span>
+                      <span className="font-medium text-foreground">{s.style}</span>
+                      <span className="text-xs text-muted-foreground">
+                        <span className="text-primary">{s.myPercent.toFixed(0)}%</span>
                         {" / "}
-                        <span className="text-gray-500">{s.friendPercent.toFixed(0)}%</span>
+                        <span className="text-muted-foreground">{s.friendPercent.toFixed(0)}%</span>
                       </span>
                     </div>
-                    <div className="flex h-1.5 rounded-full overflow-hidden bg-gray-100">
+                    <div className="flex h-1.5 rounded-full overflow-hidden bg-muted">
                       <div
-                        className="bg-amber-500"
+                        className="bg-primary"
                         style={{
                           width: `${(s.myPercent / (s.myPercent + s.friendPercent || 1)) * 100}%`,
                         }}
                       />
                       <div
-                        className="bg-gray-400"
+                        className="bg-secondary"
                         style={{
                           width: `${(s.friendPercent / (s.myPercent + s.friendPercent || 1)) * 100}%`,
                         }}
@@ -636,23 +635,23 @@ export function FriendCompare({
           {(result.youCanOffer.length > 0 || result.theyCanOffer.length > 0) && (
             <div className="grid md:grid-cols-2 gap-6">
               {/* You can offer */}
-              <Card className="bg-white border-gray-200">
+              <Card>
                 <CardHeader className="pb-3">
                   <CardTitle className="flex items-center gap-2 text-base">
-                    <span className="text-green-600">You can offer</span>
+                    <span className="text-green-500">You can offer</span>
                     {result.youCanOffer.length > 0 && (
                       <Badge variant="default" className="bg-green-600 text-white">
                         {result.youCanOffer.length}
                       </Badge>
                     )}
                   </CardTitle>
-                  <CardDescription className="text-gray-500 text-xs">
+                  <CardDescription className="text-xs">
                     Records you have that {result.friendUsername} wants
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   {result.youCanOffer.length === 0 ? (
-                    <p className="text-gray-500 text-center py-4 text-sm">
+                    <p className="text-muted-foreground text-center py-4 text-sm">
                       No matches found
                     </p>
                   ) : (
@@ -669,23 +668,23 @@ export function FriendCompare({
               </Card>
 
               {/* They can offer */}
-              <Card className="bg-white border-gray-200">
+              <Card>
                 <CardHeader className="pb-3">
                   <CardTitle className="flex items-center gap-2 text-base">
-                    <span className="text-blue-600">{result.friendUsername} can offer</span>
+                    <span className="text-primary">{result.friendUsername} can offer</span>
                     {result.theyCanOffer.length > 0 && (
-                      <Badge variant="default" className="bg-blue-600 text-white">
+                      <Badge variant="default">
                         {result.theyCanOffer.length}
                       </Badge>
                     )}
                   </CardTitle>
-                  <CardDescription className="text-gray-500 text-xs">
+                  <CardDescription className="text-xs">
                     Records they have that you want
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   {result.theyCanOffer.length === 0 ? (
-                    <p className="text-gray-500 text-center py-4 text-sm">
+                    <p className="text-muted-foreground text-center py-4 text-sm">
                       No matches found
                     </p>
                   ) : (
@@ -704,15 +703,15 @@ export function FriendCompare({
           )}
 
           {/* Albums In Common */}
-          <Card className="bg-white border-gray-200">
+          <Card>
             <CardHeader className="pb-3">
-              <CardTitle className="text-gray-900 text-base">
+              <CardTitle className="text-base">
                 Albums In Common ({result.overlap.length})
               </CardTitle>
             </CardHeader>
             <CardContent>
               {result.overlap.length === 0 ? (
-                <p className="text-gray-500 text-center py-8">
+                <p className="text-muted-foreground text-center py-8">
                   No overlapping albums found
                 </p>
               ) : (

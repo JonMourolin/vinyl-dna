@@ -4,164 +4,145 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
-  DEEPCOGS - Retro-Modern Aesthetic
-  Inspired by: warm vinyl grooves, record sleeves, analog warmth
-  Avoids: generic purple gradients, Inter font, cookie-cutter patterns
+  DEEPCOGS - Velvet Dark Theme
+  Warm coral/reddish tones with vinyl-inspired accents
 */
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
   --color-vinyl: var(--vinyl);
   --color-vinyl-groove: var(--vinyl-groove);
   --color-amber: var(--amber);
   --color-amber-glow: var(--amber-glow);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
 }
 
 :root {
-  --radius: 0.5rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
 
-  /* Light theme - cream paper, warm tones */
-  --background: oklch(0.97 0.01 85);
-  --foreground: oklch(0.15 0.02 30);
-  --card: oklch(0.99 0.005 85);
-  --card-foreground: oklch(0.15 0.02 30);
-  --popover: oklch(0.99 0.005 85);
-  --popover-foreground: oklch(0.15 0.02 30);
+  /* Custom vinyl colors - coral palette */
+  --vinyl: oklch(0.205 0 0);
+  --vinyl-groove: oklch(0.556 0 0);
+  --amber: oklch(0.205 0 0);
+  --amber-glow: oklch(0.708 0 0);
 
-  /* Primary: Deep vinyl black */
-  --primary: oklch(0.18 0.01 30);
-  --primary-foreground: oklch(0.98 0.01 85);
-
-  /* Secondary: Warm cream */
-  --secondary: oklch(0.94 0.02 85);
-  --secondary-foreground: oklch(0.18 0.02 30);
-
-  /* Muted: Paper-like */
-  --muted: oklch(0.92 0.015 85);
-  --muted-foreground: oklch(0.45 0.02 30);
-
-  /* Accent: Warm amber (vinyl catching light) */
-  --accent: oklch(0.75 0.15 55);
-  --accent-foreground: oklch(0.15 0.02 30);
-
-  --destructive: oklch(0.55 0.22 25);
-  --border: oklch(0.88 0.02 85);
-  --input: oklch(0.92 0.015 85);
-  --ring: oklch(0.65 0.12 55);
-
-  /* Custom vinyl colors */
-  --vinyl: oklch(0.12 0.01 30);
-  --vinyl-groove: oklch(0.25 0.02 30);
-  --amber: oklch(0.75 0.15 55);
-  --amber-glow: oklch(0.85 0.12 65);
-
-  /* Chart colors - warm vinyl-inspired palette */
-  --chart-1: oklch(0.65 0.18 45);  /* Burnt orange */
-  --chart-2: oklch(0.55 0.12 180); /* Teal */
-  --chart-3: oklch(0.75 0.15 85);  /* Gold */
-  --chart-4: oklch(0.50 0.15 15);  /* Deep red */
-  --chart-5: oklch(0.60 0.10 250); /* Slate blue */
-
-  --sidebar: oklch(0.95 0.01 85);
-  --sidebar-foreground: oklch(0.15 0.02 30);
-  --sidebar-primary: oklch(0.18 0.01 30);
-  --sidebar-primary-foreground: oklch(0.98 0.01 85);
-  --sidebar-accent: oklch(0.92 0.02 85);
-  --sidebar-accent-foreground: oklch(0.18 0.02 30);
-  --sidebar-border: oklch(0.88 0.02 85);
-  --sidebar-ring: oklch(0.65 0.12 55);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --radius: 0.375rem;
 }
 
 .dark {
-  /* Dark theme - deep vinyl black, warm glows */
-  --background: oklch(0.12 0.015 30);
-  --foreground: oklch(0.92 0.02 85);
-  --card: oklch(0.16 0.015 30);
-  --card-foreground: oklch(0.92 0.02 85);
-  --popover: oklch(0.16 0.015 30);
-  --popover-foreground: oklch(0.92 0.02 85);
+  --background: oklch(0.236 0.032 19.77);
+  --foreground: oklch(0.971 0.014 17.398);
+  --card: oklch(0.171 0.016 18.8);
+  --card-foreground: oklch(0.909 0.047 18.055);
+  --popover: oklch(0.329 0.051 20.168);
+  --popover-foreground: oklch(0.943 0.029 17.67);
+  --primary: oklch(0.697 0.196 14.708);
+  --primary-foreground: oklch(0.248 0.078 9.469);
+  --secondary: oklch(0.803 0.112 19.825);
+  --secondary-foreground: oklch(0.139 0.039 23.715);
+  --muted: oklch(0.291 0.042 19.892);
+  --muted-foreground: oklch(0.727 0.04 18.124);
+  --accent: oklch(0.251 0.03 19.401);
+  --accent-foreground: oklch(0.791 0.019 17.571);
+  --destructive: oklch(0.592 0.225 27.675);
+  --border: oklch(0.347 0.046 19.64);
+  --input: oklch(0.37 0.054 19.94);
+  --ring: oklch(0.622 0.2 8.157);
+  --chart-1: oklch(0.657 0.229 347.741);
+  --chart-2: oklch(0.591 0.214 341.657);
+  --chart-3: oklch(0.518 0.198 340.531);
+  --chart-4: oklch(0.443 0.164 356.722);
+  --chart-5: oklch(0.381 0.14 2.504);
+  --sidebar: oklch(0.184 0.024 19.638);
+  --sidebar-foreground: oklch(0.829 0.025 17.666);
+  --sidebar-primary: oklch(0.526 0.174 342.065);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.255 0.042 357.432);
+  --sidebar-accent-foreground: oklch(0.976 0.001 0);
+  --sidebar-border: oklch(0.347 0.058 20.428);
+  --sidebar-ring: oklch(0.581 0.243 335.261);
 
-  /* Primary: Warm amber */
-  --primary: oklch(0.75 0.15 55);
-  --primary-foreground: oklch(0.12 0.015 30);
+  /* Custom vinyl colors - coral palette */
+  --vinyl: oklch(0.171 0.016 18.8);
+  --vinyl-groove: oklch(0.291 0.042 19.892);
+  --amber: oklch(0.697 0.196 14.708);
+  --amber-glow: oklch(0.803 0.112 19.825);
 
-  /* Secondary: Muted vinyl */
-  --secondary: oklch(0.22 0.015 30);
-  --secondary-foreground: oklch(0.92 0.02 85);
-
-  /* Muted: Deep grey */
-  --muted: oklch(0.22 0.01 30);
-  --muted-foreground: oklch(0.60 0.02 85);
-
-  /* Accent: Glowing amber */
-  --accent: oklch(0.75 0.15 55);
-  --accent-foreground: oklch(0.12 0.015 30);
-
-  --destructive: oklch(0.60 0.20 25);
-  --border: oklch(0.25 0.015 30);
-  --input: oklch(0.22 0.015 30);
-  --ring: oklch(0.75 0.15 55);
-
-  /* Custom vinyl colors */
-  --vinyl: oklch(0.08 0.01 30);
-  --vinyl-groove: oklch(0.20 0.015 30);
-  --amber: oklch(0.75 0.15 55);
-  --amber-glow: oklch(0.85 0.12 65);
-
-  /* Chart colors - vibrant on dark */
-  --chart-1: oklch(0.72 0.18 45);  /* Bright orange */
-  --chart-2: oklch(0.65 0.14 180); /* Teal */
-  --chart-3: oklch(0.80 0.16 85);  /* Gold */
-  --chart-4: oklch(0.60 0.18 15);  /* Coral red */
-  --chart-5: oklch(0.68 0.12 250); /* Periwinkle */
-
-  --sidebar: oklch(0.14 0.015 30);
-  --sidebar-foreground: oklch(0.92 0.02 85);
-  --sidebar-primary: oklch(0.75 0.15 55);
-  --sidebar-primary-foreground: oklch(0.12 0.015 30);
-  --sidebar-accent: oklch(0.22 0.015 30);
-  --sidebar-accent-foreground: oklch(0.92 0.02 85);
-  --sidebar-border: oklch(0.25 0.015 30);
-  --sidebar-ring: oklch(0.75 0.15 55);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --radius: 0.375rem;
 }
 
 @layer base {
@@ -189,17 +170,17 @@
 
 /* Glow effect for accent elements */
 .glow-amber {
-  box-shadow: 0 0 20px oklch(0.75 0.15 55 / 0.3),
-              0 0 40px oklch(0.75 0.15 55 / 0.1);
+  box-shadow: 0 0 20px oklch(0.697 0.196 14.708 / 0.3),
+              0 0 40px oklch(0.697 0.196 14.708 / 0.1);
 }
 
 /* Vinyl groove texture */
 .vinyl-texture {
   background: repeating-radial-gradient(
     circle at center,
-    oklch(0.12 0.015 30) 0px,
-    oklch(0.15 0.015 30) 1px,
-    oklch(0.12 0.015 30) 2px
+    oklch(0.171 0.016 18.8) 0px,
+    oklch(0.236 0.032 19.77) 1px,
+    oklch(0.171 0.016 18.8) 2px
   );
 }
 

@@ -59,7 +59,7 @@ function TradeCard({ opportunity }: { opportunity: TradeOpportunity }) {
       rel="noopener noreferrer"
       className="block"
     >
-      <div className="flex gap-3 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-all hover:scale-[1.02] border border-gray-100">
+      <div className="flex gap-3 p-3 rounded-lg bg-muted hover:bg-muted/80 transition-all hover:scale-[1.02] border border-border">
         {info.thumb ? (
           <img
             src={info.thumb}
@@ -67,9 +67,9 @@ function TradeCard({ opportunity }: { opportunity: TradeOpportunity }) {
             className="w-14 h-14 rounded object-cover flex-shrink-0"
           />
         ) : (
-          <div className="w-14 h-14 rounded bg-gray-100 flex items-center justify-center flex-shrink-0">
+          <div className="w-14 h-14 rounded bg-muted flex items-center justify-center flex-shrink-0">
             <svg
-              className="w-6 h-6 text-gray-400"
+              className="w-6 h-6 text-muted-foreground"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -80,13 +80,13 @@ function TradeCard({ opportunity }: { opportunity: TradeOpportunity }) {
           </div>
         )}
         <div className="min-w-0 flex-1">
-          <p className="font-medium text-gray-900 truncate">{info.title}</p>
-          <p className="text-sm text-gray-500 truncate">
+          <p className="font-medium text-foreground truncate">{info.title}</p>
+          <p className="text-sm text-muted-foreground truncate">
             {info.artists?.map((a) => a.name).join(", ")} {info.year ? `• ${info.year}` : ""}
           </p>
           <div className="flex gap-1 mt-1">
             {info.genres?.slice(0, 2).map((genre) => (
-              <Badge key={genre} variant="secondary" className="text-xs bg-gray-100 text-gray-700">
+              <Badge key={genre} variant="secondary" className="text-xs">
                 {genre}
               </Badge>
             ))}
@@ -214,10 +214,10 @@ export function TradeFinder({
 
   if (myCollectionLoading) {
     return (
-      <Card className="bg-white border-gray-200">
+      <Card>
         <CardHeader>
-          <CardTitle className="text-gray-900">Trade Finder</CardTitle>
-          <CardDescription className="text-gray-500">Loading your collection first...</CardDescription>
+          <CardTitle>Trade Finder</CardTitle>
+          <CardDescription>Loading your collection first...</CardDescription>
         </CardHeader>
         <CardContent>
           <Skeleton className="h-10 w-full" />
@@ -229,11 +229,11 @@ export function TradeFinder({
   return (
     <div className="space-y-6">
       {/* Search form */}
-      <Card className="bg-white border-gray-200">
+      <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-gray-900">
+          <CardTitle className="flex items-center gap-2">
             <svg
-              className="w-5 h-5 text-amber-600"
+              className="w-5 h-5 text-primary"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -247,10 +247,10 @@ export function TradeFinder({
             </svg>
             Trade Finder
           </CardTitle>
-          <CardDescription className="text-gray-500">
+          <CardDescription>
             Find records you own that a friend wants. Enter their Discogs username
             to discover trade opportunities.
-            <span className="block mt-2 text-amber-600">
+            <span className="block mt-2 text-primary">
               Note: Your friend must have a public Discogs collection and wantlist.
             </span>
           </CardDescription>
@@ -263,12 +263,11 @@ export function TradeFinder({
               onChange={(e) => setFriendUsername(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               disabled={searching}
-              className="max-w-xs bg-white border-gray-200 text-gray-900 placeholder:text-gray-400"
+              className="max-w-xs"
             />
             <Button
               onClick={handleSearch}
               disabled={searching || !friendUsername.trim()}
-              className="bg-gray-900 text-white hover:bg-gray-800"
             >
               {searching ? (
                 <>
@@ -307,16 +306,16 @@ export function TradeFinder({
       {result && (
         <div className="space-y-6">
           {/* Summary */}
-          <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-gray-200">
+          <Card className="bg-gradient-to-r from-primary/10 to-secondary/10">
             <CardContent className="py-6">
               <div className="flex justify-center gap-8">
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-green-600">{result.youCanOffer.length}</p>
-                  <p className="text-sm text-gray-500">You can offer</p>
+                  <p className="text-3xl font-bold text-green-500">{result.youCanOffer.length}</p>
+                  <p className="text-sm text-muted-foreground">You can offer</p>
                 </div>
                 <div className="flex items-center">
                   <svg
-                    className="w-8 h-8 text-gray-400"
+                    className="w-8 h-8 text-muted-foreground"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -330,31 +329,31 @@ export function TradeFinder({
                   </svg>
                 </div>
                 <div className="text-center">
-                  <p className="text-3xl font-bold text-blue-600">{result.theyCanOffer.length}</p>
-                  <p className="text-sm text-gray-500">They can offer</p>
+                  <p className="text-3xl font-bold text-primary">{result.theyCanOffer.length}</p>
+                  <p className="text-sm text-muted-foreground">They can offer</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
           {/* You can offer */}
-          <Card className="bg-white border-gray-200">
+          <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <span className="text-green-600">You can offer</span>
+                <span className="text-green-500">You can offer</span>
                 {result.youCanOffer.length > 0 && (
                   <Badge variant="default" className="bg-green-600 text-white">
                     {result.youCanOffer.length}
                   </Badge>
                 )}
               </CardTitle>
-              <CardDescription className="text-gray-500">
+              <CardDescription>
                 Records you have that {result.friendUsername} wants
               </CardDescription>
             </CardHeader>
             <CardContent>
               {result.youCanOffer.length === 0 ? (
-                <p className="text-gray-500 text-center py-4">
+                <p className="text-muted-foreground text-center py-4">
                   You don't have any records that {result.friendUsername} wants.
                 </p>
               ) : (
@@ -371,23 +370,23 @@ export function TradeFinder({
           </Card>
 
           {/* They can offer */}
-          <Card className="bg-white border-gray-200">
+          <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <span className="text-blue-600">{result.friendUsername} can offer</span>
+                <span className="text-primary">{result.friendUsername} can offer</span>
                 {result.theyCanOffer.length > 0 && (
-                  <Badge variant="default" className="bg-blue-600 text-white">
+                  <Badge variant="default">
                     {result.theyCanOffer.length}
                   </Badge>
                 )}
               </CardTitle>
-              <CardDescription className="text-gray-500">
+              <CardDescription>
                 Records they have that you want
               </CardDescription>
             </CardHeader>
             <CardContent>
               {result.theyCanOffer.length === 0 ? (
-                <p className="text-gray-500 text-center py-4">
+                <p className="text-muted-foreground text-center py-4">
                   {result.friendUsername} doesn't have any records from your wantlist.
                 </p>
               ) : (

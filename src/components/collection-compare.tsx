@@ -66,7 +66,7 @@ function calculateCompatibility(
 function ReleaseCard({ release }: { release: DiscogsRelease }) {
   const info = release.basic_information;
   return (
-    <div className="flex gap-3 p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors border border-gray-100">
+    <div className="flex gap-3 p-3 rounded-lg bg-muted hover:bg-muted/80 transition-colors border border-border">
       {info.thumb && (
         <img
           src={info.thumb}
@@ -75,8 +75,8 @@ function ReleaseCard({ release }: { release: DiscogsRelease }) {
         />
       )}
       <div className="min-w-0 flex-1">
-        <p className="font-medium text-gray-900 truncate">{info.title}</p>
-        <p className="text-sm text-gray-500 truncate">
+        <p className="font-medium text-foreground truncate">{info.title}</p>
+        <p className="text-sm text-muted-foreground truncate">
           {info.artists?.map((a) => a.name).join(", ")} • {info.year || "N/A"}
         </p>
       </div>
@@ -176,10 +176,10 @@ export function CollectionCompare({
 
   if (myCollectionLoading) {
     return (
-      <Card className="bg-white border-gray-200">
+      <Card>
         <CardHeader>
-          <CardTitle className="text-gray-900">Compare Collections</CardTitle>
-          <CardDescription className="text-gray-500">Loading your collection first...</CardDescription>
+          <CardTitle>Compare Collections</CardTitle>
+          <CardDescription>Loading your collection first...</CardDescription>
         </CardHeader>
         <CardContent>
           <Skeleton className="h-10 w-full" />
@@ -191,10 +191,10 @@ export function CollectionCompare({
   return (
     <div className="space-y-6">
       {/* Search form */}
-      <Card className="bg-white border-gray-200">
+      <Card>
         <CardHeader>
-          <CardTitle className="text-gray-900">Compare with a Friend</CardTitle>
-          <CardDescription className="text-gray-500">
+          <CardTitle>Compare with a Friend</CardTitle>
+          <CardDescription>
             Enter a Discogs username to compare your collections and discover
             overlapping taste
           </CardDescription>
@@ -207,12 +207,11 @@ export function CollectionCompare({
               onChange={(e) => setFriendUsername(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleCompare()}
               disabled={comparing}
-              className="max-w-xs bg-white border-gray-200 text-gray-900 placeholder:text-gray-400"
+              className="max-w-xs"
             />
             <Button
               onClick={handleCompare}
               disabled={comparing || !friendUsername.trim()}
-              className="bg-gray-900 text-white hover:bg-gray-800"
             >
               {comparing ? (
                 <>
@@ -253,19 +252,19 @@ export function CollectionCompare({
       {comparison && (
         <div className="space-y-6">
           {/* Compatibility Score */}
-          <Card className="bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200">
+          <Card className="bg-gradient-to-br from-primary/10 to-secondary/10 border-primary/20">
             <CardContent className="pt-8 pb-8">
               <div className="text-center">
-                <div className="text-7xl font-bold text-amber-600 mb-2">
+                <div className="text-7xl font-bold text-primary mb-2">
                   {comparison.compatibilityScore}%
                 </div>
-                <p className="text-lg text-gray-600">
+                <p className="text-lg text-muted-foreground">
                   Collection Compatibility with{" "}
-                  <span className="font-semibold text-gray-900">
+                  <span className="font-semibold text-foreground">
                     {comparison.friendUsername}
                   </span>
                 </p>
-                <p className="text-sm text-gray-500 mt-2">
+                <p className="text-sm text-muted-foreground mt-2">
                   {comparison.overlap.length} albums in common
                 </p>
               </div>
@@ -273,28 +272,28 @@ export function CollectionCompare({
               {/* Venn diagram representation */}
               <div className="flex items-center justify-center gap-4 mt-8">
                 <div className="text-center">
-                  <div className="w-24 h-24 rounded-full bg-amber-200 flex items-center justify-center">
-                    <span className="font-bold text-lg text-amber-800">
+                  <div className="w-24 h-24 rounded-full bg-primary/20 flex items-center justify-center">
+                    <span className="font-bold text-lg text-primary">
                       {comparison.onlyMe.length}
                     </span>
                   </div>
-                  <p className="text-sm mt-2 text-gray-500">Only you</p>
+                  <p className="text-sm mt-2 text-muted-foreground">Only you</p>
                 </div>
                 <div className="text-center -mx-6 z-10">
-                  <div className="w-20 h-20 rounded-full bg-amber-500 flex items-center justify-center">
-                    <span className="font-bold text-lg text-white">
+                  <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center">
+                    <span className="font-bold text-lg text-primary-foreground">
                       {comparison.overlap.length}
                     </span>
                   </div>
-                  <p className="text-sm mt-2 font-medium text-gray-900">Both</p>
+                  <p className="text-sm mt-2 font-medium text-foreground">Both</p>
                 </div>
                 <div className="text-center">
-                  <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center">
-                    <span className="font-bold text-lg text-gray-700">
+                  <div className="w-24 h-24 rounded-full bg-secondary flex items-center justify-center">
+                    <span className="font-bold text-lg text-secondary-foreground">
                       {comparison.onlyFriend.length}
                     </span>
                   </div>
-                  <p className="text-sm mt-2 text-gray-500">
+                  <p className="text-sm mt-2 text-muted-foreground">
                     Only {comparison.friendUsername}
                   </p>
                 </div>
@@ -303,10 +302,10 @@ export function CollectionCompare({
           </Card>
 
           {/* Genre Comparison */}
-          <Card className="bg-white border-gray-200">
+          <Card>
             <CardHeader>
-              <CardTitle className="text-gray-900">Genre Comparison</CardTitle>
-              <CardDescription className="text-gray-500">
+              <CardTitle>Genre Comparison</CardTitle>
+              <CardDescription>
                 How your genre preferences align
               </CardDescription>
             </CardHeader>
@@ -315,15 +314,15 @@ export function CollectionCompare({
                 {comparison.genreOverlap.map((g) => (
                   <div key={g.genre} className="space-y-1">
                     <div className="flex justify-between text-sm">
-                      <span className="font-medium text-gray-900">{g.genre}</span>
-                      <span className="text-gray-500">
+                      <span className="font-medium text-foreground">{g.genre}</span>
+                      <span className="text-muted-foreground">
                         You: {g.myCount} / {comparison.friendUsername}:{" "}
                         {g.friendCount}
                       </span>
                     </div>
-                    <div className="flex h-2 rounded-full overflow-hidden bg-gray-100">
+                    <div className="flex h-2 rounded-full overflow-hidden bg-muted">
                       <div
-                        className="bg-amber-500"
+                        className="bg-primary"
                         style={{
                           width: `${
                             (g.myCount / (g.myCount + g.friendCount)) * 100
@@ -331,7 +330,7 @@ export function CollectionCompare({
                         }}
                       />
                       <div
-                        className="bg-gray-300"
+                        className="bg-secondary"
                         style={{
                           width: `${
                             (g.friendCount / (g.myCount + g.friendCount)) * 100
@@ -347,13 +346,13 @@ export function CollectionCompare({
 
           {/* Collection Details with custom tabs */}
           <div className="space-y-4">
-            <div className="flex gap-2 p-1 bg-gray-100 rounded-lg w-fit">
+            <div className="flex gap-2 p-1 bg-muted rounded-lg w-fit">
               <button
                 onClick={() => setActiveTab("overlap")}
                 className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                   activeTab === "overlap"
-                    ? "bg-white text-gray-900 shadow-sm"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "bg-card text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 In Common ({comparison.overlap.length})
@@ -362,8 +361,8 @@ export function CollectionCompare({
                 onClick={() => setActiveTab("onlyMe")}
                 className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                   activeTab === "onlyMe"
-                    ? "bg-white text-gray-900 shadow-sm"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "bg-card text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 Only You ({comparison.onlyMe.length})
@@ -372,8 +371,8 @@ export function CollectionCompare({
                 onClick={() => setActiveTab("onlyFriend")}
                 className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
                   activeTab === "onlyFriend"
-                    ? "bg-white text-gray-900 shadow-sm"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "bg-card text-foreground shadow-sm"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 Only Them ({comparison.onlyFriend.length})
@@ -381,16 +380,16 @@ export function CollectionCompare({
             </div>
 
             {activeTab === "overlap" && (
-              <Card className="bg-white border-gray-200">
+              <Card>
                 <CardHeader>
-                  <CardTitle className="text-gray-900">Albums You Both Own</CardTitle>
-                  <CardDescription className="text-gray-500">
+                  <CardTitle>Albums You Both Own</CardTitle>
+                  <CardDescription>
                     These are the releases you share with {comparison.friendUsername}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   {comparison.overlap.length === 0 ? (
-                    <p className="text-gray-500 text-center py-8">
+                    <p className="text-muted-foreground text-center py-8">
                       No overlapping albums found
                     </p>
                   ) : (
@@ -405,10 +404,10 @@ export function CollectionCompare({
             )}
 
             {activeTab === "onlyMe" && (
-              <Card className="bg-white border-gray-200">
+              <Card>
                 <CardHeader>
-                  <CardTitle className="text-gray-900">Your Unique Albums</CardTitle>
-                  <CardDescription className="text-gray-500">
+                  <CardTitle>Your Unique Albums</CardTitle>
+                  <CardDescription>
                     Albums in your collection that {comparison.friendUsername} doesn&apos;t have
                   </CardDescription>
                 </CardHeader>
@@ -423,12 +422,12 @@ export function CollectionCompare({
             )}
 
             {activeTab === "onlyFriend" && (
-              <Card className="bg-white border-gray-200">
+              <Card>
                 <CardHeader>
-                  <CardTitle className="text-gray-900">
+                  <CardTitle>
                     {comparison.friendUsername}&apos;s Unique Albums
                   </CardTitle>
-                  <CardDescription className="text-gray-500">
+                  <CardDescription>
                     Albums they have that you might want to check out
                   </CardDescription>
                 </CardHeader>
