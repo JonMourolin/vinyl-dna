@@ -1,21 +1,58 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
+
+const features = [
+  { label: "Collection", description: "Import your vinyl" },
+  { label: "Analysis", description: "Discover patterns" },
+  { label: "Compare", description: "Match with friends" },
+  { label: "Trade", description: "Find opportunities" },
+];
 
 export default function Home() {
   return (
     <main className="min-h-screen flex flex-col lg:flex-row bg-background">
-      {/* LEFT PANEL - Visual/Brand (full bleed) */}
-      <div
-        className="lg:w-1/2 min-h-[40vh] lg:min-h-screen relative overflow-hidden"
-        style={{
-          backgroundImage: `url('https://images.pexels.com/photos/2117243/pexels-photo-2117243.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        {/* Dark overlay for better contrast */}
-        <div className="absolute inset-0 bg-black/20" />
+      {/* LEFT PANEL - Hero + Feature Strip */}
+      <div className="lg:w-1/2 min-h-[40vh] lg:min-h-screen relative overflow-hidden bg-zinc-900 flex flex-col">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-zinc-800/40 via-zinc-900 to-zinc-950" />
+
+        {/* Hero Illustration - Main area */}
+        <div className="relative z-10 flex-1 flex items-center justify-center p-8">
+          <div className="w-full max-w-md">
+            <Image
+              src="/illustrations.png"
+              alt="Vinyl collection analysis"
+              width={600}
+              height={300}
+              className="w-full h-auto object-contain drop-shadow-2xl"
+              priority
+            />
+          </div>
+        </div>
+
+        {/* Feature Strip - Bottom */}
+        <div className="relative z-10 border-t border-white/10 bg-zinc-950/50 backdrop-blur-sm">
+          <div className="grid grid-cols-4 divide-x divide-white/10">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className="p-4 text-center group hover:bg-white/5 transition-colors cursor-default"
+              >
+                <p className="text-sm font-medium text-white/90 group-hover:text-[#e57373] transition-colors">
+                  {feature.label}
+                </p>
+                <p className="text-xs text-white/50 mt-1 hidden lg:block">
+                  {feature.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Accent line */}
+        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#e57373]/0 via-[#e57373]/60 to-[#e57373]/0" />
       </div>
 
       {/* RIGHT PANEL - Login/Form */}
