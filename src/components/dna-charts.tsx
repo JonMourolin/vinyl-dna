@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import {
   Card,
   CardContent,
@@ -357,50 +357,102 @@ export function DNACharts({ releases }: DNAChartsProps) {
           </CardContent>
         </Card>
 
-        {/* Oddities & Pressings */}
-        <Card className="flex flex-col">
-          <CardHeader>
-            <CardTitle>Oddities & Pressings</CardTitle>
-            <CardDescription>
-              Rare formats and pressing breakdown
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex-1 flex">
-            <div className="flex gap-3 flex-1">
-              <div className="flex-1 flex flex-col items-center justify-center p-4 rounded-lg bg-chart-1/10 border border-chart-1/20">
-                <p className="text-4xl font-bold text-chart-1">
-                  {analysis.oddities.testPressings}
-                </p>
-                <p className="text-sm text-muted-foreground mt-2">Test Pressings</p>
-              </div>
-              <div className="flex-1 flex flex-col items-center justify-center p-4 rounded-lg bg-chart-2/10 border border-chart-2/20">
-                <p className="text-4xl font-bold text-chart-2">
-                  {analysis.oddities.promos}
-                </p>
-                <p className="text-sm text-muted-foreground mt-2">Promos</p>
-              </div>
-              <div className="flex-1 flex flex-col items-center justify-center p-4 rounded-lg bg-chart-3/10 border border-chart-3/20">
-                <p className="text-4xl font-bold text-chart-3">
-                  {analysis.oddities.limited}
-                </p>
-                <p className="text-sm text-muted-foreground mt-2">Limited</p>
-              </div>
-              <div className="flex-1 flex flex-col items-center justify-center p-4 rounded-lg bg-chart-4/10 border border-chart-4/20">
-                <p className="text-4xl font-bold text-chart-4">
-                  {analysis.totalReleases - analysis.represses}
-                </p>
-                <p className="text-sm text-muted-foreground mt-2">Originals</p>
-              </div>
-              <div className="flex-1 flex flex-col items-center justify-center p-4 rounded-lg bg-chart-5/10 border border-chart-5/20">
-                <p className="text-4xl font-bold text-chart-5">
-                  {analysis.represses}
-                </p>
-                <p className="text-sm text-muted-foreground mt-2">Represses</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Oddities & Pressings - Carousel */}
+        <OdditiesCarousel
+          testPressings={analysis.oddities.testPressings}
+          promos={analysis.oddities.promos}
+          limited={analysis.oddities.limited}
+          originals={analysis.totalReleases - analysis.represses}
+          represses={analysis.represses}
+        />
       </div>
     </div>
+  );
+}
+
+// Oddities Carousel Component
+function OdditiesCarousel({
+  testPressings,
+  promos,
+  limited,
+  originals,
+  represses,
+}: {
+  testPressings: number;
+  promos: number;
+  limited: number;
+  originals: number;
+  represses: number;
+}) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const items = [
+    { label: "Test Pressings", value: testPressings, bgClass: "bg-chart-1/10", borderClass: "border-chart-1/20", textClass: "text-chart-1" },
+    { label: "Promos", value: promos, bgClass: "bg-chart-2/10", borderClass: "border-chart-2/20", textClass: "text-chart-2" },
+    { label: "Limited", value: limited, bgClass: "bg-chart-3/10", borderClass: "border-chart-3/20", textClass: "text-chart-3" },
+    { label: "Originals", value: originals, bgClass: "bg-chart-4/10", borderClass: "border-chart-4/20", textClass: "text-chart-4" },
+    { label: "Represses", value: represses, bgClass: "bg-chart-5/10", borderClass: "border-chart-5/20", textClass: "text-chart-5" },
+  ];
+
+  const current = items[currentIndex];
+
+  const goNext = () => setCurrentIndex((i) => (i + 1) % items.length);
+  const goPrev = () => setCurrentIndex((i) => (i - 1 + items.length) % items.length);
+
+  return (
+    <Card className="flex flex-col">
+      <CardHeader>
+        <CardTitle>Oddities & Pressings</CardTitle>
+        <CardDescription>Rare formats and pressing breakdown</CardDescription>
+      </CardHeader>
+      <CardContent className="flex-1 flex items-center justify-center">
+        <div className="flex items-center gap-4 w-full">
+          {/* Left Arrow */}
+          <button
+            onClick={goPrev}
+            className="p-2 rounded-full bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground transition-colors"
+            aria-label="Previous"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          {/* Current Item */}
+          <div
+            className={`flex-1 flex flex-col items-center justify-center py-10 rounded-xl ${current.bgClass} border ${current.borderClass}`}
+          >
+            <p className={`text-6xl font-bold ${current.textClass}`}>
+              {current.value}
+            </p>
+            <p className="text-base text-muted-foreground mt-3">{current.label}</p>
+            {/* Dots indicator */}
+            <div className="flex gap-1.5 mt-5">
+              {items.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentIndex(i)}
+                  className={`w-2 h-2 rounded-full transition-colors ${
+                    i === currentIndex ? "bg-primary" : "bg-muted-foreground/30"
+                  }`}
+                  aria-label={`Go to ${items[i].label}`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Right Arrow */}
+          <button
+            onClick={goNext}
+            className="p-2 rounded-full bg-muted hover:bg-muted/80 text-muted-foreground hover:text-foreground transition-colors"
+            aria-label="Next"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </CardContent>
+    </Card>
   );
 }
