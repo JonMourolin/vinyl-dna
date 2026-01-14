@@ -417,27 +417,29 @@ function StatCard({
   loading?: boolean;
 }) {
   return (
-    <Card className="bg-card">
-      <CardContent className="p-3">
-        <div className="flex items-center gap-3">
+    <Card className="border border-border bg-gradient-to-br from-card to-card/50">
+      <CardContent className="px-4 py-3">
+        {/* Header: Label left, Badge right */}
+        <div className="flex items-center justify-between mb-1">
+          <p className="text-xs font-medium text-primary">{label}</p>
+          {sublabel && !loading && (
+            <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-md">
+              {sublabel}
+            </span>
+          )}
+        </div>
+        {/* Value with optional icon */}
+        <div className="flex items-center gap-2">
           {icon && (
-            <div className="p-1.5 rounded-md bg-muted text-muted-foreground flex-shrink-0">
+            <div className="p-1 rounded-md bg-muted text-muted-foreground flex-shrink-0">
               {icon}
             </div>
           )}
-          <div className="min-w-0 flex-1">
-            <p className="text-xs font-medium text-muted-foreground truncate">{label}</p>
-            {loading ? (
-              <Skeleton className="h-5 w-16 mt-0.5" />
-            ) : (
-              <div className="flex items-baseline gap-1.5">
-                <p className="text-lg font-semibold text-foreground truncate">{value}</p>
-                {sublabel && (
-                  <span className="text-xs text-primary flex-shrink-0">{sublabel}</span>
-                )}
-              </div>
-            )}
-          </div>
+          {loading ? (
+            <Skeleton className="h-6 w-20" />
+          ) : (
+            <p className="text-xl font-bold text-foreground truncate">{value}</p>
+          )}
         </div>
       </CardContent>
     </Card>
