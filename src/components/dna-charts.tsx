@@ -133,9 +133,9 @@ export function DNACharts({ releases }: DNAChartsProps) {
 
   if (releases.length === 0) {
     return (
-      <Card className="bg-white border-gray-200">
+      <Card>
         <CardContent className="py-12 text-center">
-          <p className="text-gray-500">
+          <p className="text-muted-foreground">
             No releases found in your collection to analyze.
           </p>
         </CardContent>
@@ -148,10 +148,10 @@ export function DNACharts({ releases }: DNAChartsProps) {
       {/* Genre & Era Charts */}
       <div className="grid md:grid-cols-2 gap-6">
         {/* Genre Distribution */}
-        <Card className="bg-white border-gray-200">
+        <Card>
           <CardHeader>
-            <CardTitle className="text-gray-900">Genre DNA</CardTitle>
-            <CardDescription className="text-gray-500">
+            <CardTitle>Genre DNA</CardTitle>
+            <CardDescription>
               Your collection&apos;s genre breakdown
             </CardDescription>
           </CardHeader>
@@ -181,10 +181,11 @@ export function DNACharts({ releases }: DNAChartsProps) {
                   </Pie>
                   <Tooltip
                     contentStyle={{
-                      background: "#fff",
-                      border: "1px solid #e5e7eb",
+                      background: "var(--popover)",
+                      border: "1px solid var(--border)",
                       borderRadius: "8px",
                       boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                      color: "var(--popover-foreground)",
                     }}
                   />
                 </PieChart>
@@ -194,29 +195,30 @@ export function DNACharts({ releases }: DNAChartsProps) {
         </Card>
 
         {/* Decade Distribution */}
-        <Card className="bg-white border-gray-200">
+        <Card>
           <CardHeader>
-            <CardTitle className="text-gray-900">Era Distribution</CardTitle>
-            <CardDescription className="text-gray-500">When your music was released</CardDescription>
+            <CardTitle>Era Distribution</CardTitle>
+            <CardDescription>When your music was released</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={analysis.decades} layout="vertical">
-                  <XAxis type="number" stroke="#9ca3af" fontSize={12} />
+                  <XAxis type="number" stroke="var(--muted-foreground)" fontSize={12} />
                   <YAxis
                     type="category"
                     dataKey="name"
-                    stroke="#9ca3af"
+                    stroke="var(--muted-foreground)"
                     width={60}
                     fontSize={12}
                   />
                   <Tooltip
                     contentStyle={{
-                      background: "#fff",
-                      border: "1px solid #e5e7eb",
+                      background: "var(--popover)",
+                      border: "1px solid var(--border)",
                       borderRadius: "8px",
                       boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)",
+                      color: "var(--popover-foreground)",
                     }}
                   />
                   <Bar
@@ -232,10 +234,10 @@ export function DNACharts({ releases }: DNAChartsProps) {
       </div>
 
       {/* Style Breakdown - moved here after Genre & Era */}
-      <Card className="bg-white border-gray-200">
+      <Card>
         <CardHeader>
-          <CardTitle className="text-gray-900">Style Breakdown</CardTitle>
-          <CardDescription className="text-gray-500">
+          <CardTitle>Style Breakdown</CardTitle>
+          <CardDescription>
             More specific sub-genres in your collection
           </CardDescription>
         </CardHeader>
@@ -261,24 +263,24 @@ export function DNACharts({ releases }: DNAChartsProps) {
       {/* Labels & Oddities */}
       <div className="grid md:grid-cols-2 gap-6">
         {/* Top Labels */}
-        <Card className="bg-white border-gray-200">
+        <Card>
           <CardHeader>
-            <CardTitle className="text-gray-900">Top Labels</CardTitle>
-            <CardDescription className="text-gray-500">Your most collected labels</CardDescription>
+            <CardTitle>Top Labels</CardTitle>
+            <CardDescription>Your most collected labels</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
               {analysis.labels.slice(0, 8).map((label, index) => (
                 <div key={label.name} className="space-y-1">
                   <div className="flex justify-between text-sm">
-                    <span className="font-medium text-gray-900 truncate max-w-[200px]">
+                    <span className="font-medium text-foreground truncate max-w-[200px]">
                       {label.name}
                     </span>
-                    <span className="text-gray-500">
+                    <span className="text-muted-foreground">
                       {label.value} releases
                     </span>
                   </div>
-                  <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                  <div className="h-2 bg-muted rounded-full overflow-hidden">
                     <div
                       className="h-full rounded-full transition-all"
                       style={{
@@ -294,44 +296,44 @@ export function DNACharts({ releases }: DNAChartsProps) {
         </Card>
 
         {/* Oddities & Pressings */}
-        <Card className="bg-white border-gray-200">
+        <Card>
           <CardHeader>
-            <CardTitle className="text-gray-900">Oddities & Pressings</CardTitle>
-            <CardDescription className="text-gray-500">
+            <CardTitle>Oddities & Pressings</CardTitle>
+            <CardDescription>
               Rare formats and pressing breakdown
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-5 gap-3">
-              <div className="text-center p-3 rounded-lg bg-purple-50 border border-purple-100">
-                <p className="text-2xl font-bold text-purple-600">
+              <div className="text-center p-3 rounded-lg bg-chart-1/10 border border-chart-1/20">
+                <p className="text-2xl font-bold text-chart-1">
                   {analysis.oddities.testPressings}
                 </p>
-                <p className="text-xs text-gray-500">Test Pressings</p>
+                <p className="text-xs text-muted-foreground">Test Pressings</p>
               </div>
-              <div className="text-center p-3 rounded-lg bg-blue-50 border border-blue-100">
-                <p className="text-2xl font-bold text-blue-600">
+              <div className="text-center p-3 rounded-lg bg-chart-2/10 border border-chart-2/20">
+                <p className="text-2xl font-bold text-chart-2">
                   {analysis.oddities.promos}
                 </p>
-                <p className="text-xs text-gray-500">Promos</p>
+                <p className="text-xs text-muted-foreground">Promos</p>
               </div>
-              <div className="text-center p-3 rounded-lg bg-amber-50 border border-amber-100">
-                <p className="text-2xl font-bold text-amber-600">
+              <div className="text-center p-3 rounded-lg bg-chart-3/10 border border-chart-3/20">
+                <p className="text-2xl font-bold text-chart-3">
                   {analysis.oddities.limited}
                 </p>
-                <p className="text-xs text-gray-500">Limited</p>
+                <p className="text-xs text-muted-foreground">Limited</p>
               </div>
-              <div className="text-center p-3 rounded-lg bg-green-50 border border-green-100">
-                <p className="text-2xl font-bold text-green-600">
+              <div className="text-center p-3 rounded-lg bg-chart-4/10 border border-chart-4/20">
+                <p className="text-2xl font-bold text-chart-4">
                   {analysis.totalReleases - analysis.represses}
                 </p>
-                <p className="text-xs text-gray-500">Originals</p>
+                <p className="text-xs text-muted-foreground">Originals</p>
               </div>
-              <div className="text-center p-3 rounded-lg bg-red-50 border border-red-100">
-                <p className="text-2xl font-bold text-red-600">
+              <div className="text-center p-3 rounded-lg bg-chart-5/10 border border-chart-5/20">
+                <p className="text-2xl font-bold text-chart-5">
                   {analysis.represses}
                 </p>
-                <p className="text-xs text-gray-500">Represses</p>
+                <p className="text-xs text-muted-foreground">Represses</p>
               </div>
             </div>
           </CardContent>

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col lg:flex-row bg-white">
+    <main className="min-h-screen flex flex-col lg:flex-row bg-background">
       {/* LEFT PANEL - Visual/Brand (full bleed) */}
       <div
         className="lg:w-1/2 min-h-[40vh] lg:min-h-screen relative overflow-hidden"
@@ -23,13 +23,13 @@ export default function Home() {
         <div className="w-full max-w-sm text-center">
           {/* Heading */}
           <h1
-            className="text-3xl lg:text-4xl font-normal text-gray-900 mb-3"
+            className="text-3xl lg:text-4xl font-normal text-foreground mb-3"
             style={{ fontFamily: "var(--font-serif), Georgia, serif" }}
           >
             Connect your collection
           </h1>
 
-          <p className="text-gray-500 mb-8">
+          <p className="text-muted-foreground mb-8">
             Sign in with your Discogs account to analyze your vinyl collection
             and discover your musical DNA.
           </p>
@@ -38,7 +38,7 @@ export default function Home() {
           <Button
             asChild
             size="lg"
-            className="w-full h-12 text-base font-medium rounded-lg bg-[#0a0a0a] text-white hover:bg-[#1a1a1a] transition-all duration-200 shadow-sm hover:shadow-md"
+            className="w-full h-12 text-base font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 shadow-sm hover:shadow-md"
           >
             <a href="/api/auth/discogs" className="flex items-center justify-center gap-2">
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -52,9 +52,9 @@ export default function Home() {
 
           {/* Divider */}
           <div className="flex items-center gap-4 my-6">
-            <div className="flex-1 h-px bg-gray-200" />
-            <span className="text-xs text-gray-400 uppercase tracking-wide">Permissions</span>
-            <div className="flex-1 h-px bg-gray-200" />
+            <div className="flex-1 h-px bg-border" />
+            <span className="text-xs text-muted-foreground uppercase tracking-wide">Permissions</span>
+            <div className="flex-1 h-px bg-border" />
           </div>
 
           {/* Permissions list */}
@@ -77,14 +77,14 @@ export default function Home() {
                       />
                     </svg>
                   </div>
-                  <span className="text-sm text-gray-600">{permission}</span>
+                  <span className="text-sm text-muted-foreground">{permission}</span>
                 </div>
               )
             )}
           </div>
 
           {/* Create account link */}
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-muted-foreground">
             Don&apos;t have a Discogs account?{" "}
             <a
               href="https://www.discogs.com/users/create"
@@ -97,15 +97,15 @@ export default function Home() {
           </p>
 
           {/* Footer */}
-          <div className="mt-12 pt-6 border-t border-gray-100">
-            <p className="text-xs text-gray-400">
+          <div className="mt-12 pt-6 border-t border-border">
+            <p className="text-xs text-muted-foreground">
               Your data stays private. We never modify your collection.
             </p>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-muted-foreground mt-1">
               Data via{" "}
               <a
                 href="https://discogs.com"
-                className="underline hover:text-gray-600"
+                className="underline hover:text-muted-foreground/80"
                 target="_blank"
                 rel="noopener noreferrer"
               >

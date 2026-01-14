@@ -176,22 +176,22 @@ export function DashboardClient({ username, avatarUrl, expectedTotal }: Dashboar
   ];
 
   return (
-    <div className="min-h-screen flex bg-[#fafafa]">
+    <div className="min-h-screen flex bg-background">
       {/* Sidebar */}
-      <aside className="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-screen">
+      <aside className="w-64 bg-sidebar border-r border-sidebar-border flex flex-col fixed h-screen">
         {/* Logo */}
-        <div className="p-6 border-b border-gray-100">
+        <div className="p-6 border-b border-sidebar-border">
           <Link href="/" className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-[#0a0a0a] flex items-center justify-center">
-              <span className="text-white font-bold text-sm">D</span>
+            <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
+              <span className="text-primary-foreground font-bold text-sm">D</span>
             </div>
-            <span className="font-semibold text-lg text-gray-900">DeepCogs</span>
+            <span className="font-semibold text-lg text-sidebar-foreground">DeepCogs</span>
           </Link>
         </div>
 
         {/* User */}
-        <div className="p-4 border-b border-gray-100">
-          <div className="flex items-center gap-3 p-2 rounded-lg bg-gray-50">
+        <div className="p-4 border-b border-sidebar-border">
+          <div className="flex items-center gap-3 p-2 rounded-lg bg-sidebar-accent">
             <Avatar className="w-9 h-9">
               {avatarUrl && <AvatarImage src={avatarUrl} alt={username} />}
               <AvatarFallback className="bg-primary/10 text-primary text-sm font-medium">
@@ -199,22 +199,22 @@ export function DashboardClient({ username, avatarUrl, expectedTotal }: Dashboar
               </AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-gray-900 truncate">{username}</p>
-              <p className="text-xs text-gray-500">
+              <p className="text-sm font-medium text-sidebar-foreground truncate">{username}</p>
+              <p className="text-xs text-muted-foreground">
                 {loading
                   ? expectedTotal
                     ? `Loading ${loadedCount}/${expectedTotal}...`
                     : `Loading ${loadedCount}...`
                   : `${collection?.total || 0} releases`}
                 {fromCache && !loading && (
-                  <span className="text-gray-400"> (cached)</span>
+                  <span className="text-muted-foreground/70"> (cached)</span>
                 )}
               </p>
             </div>
             {!loading && (
               <button
                 onClick={() => fetchCollection(true)}
-                className="p-1.5 rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-200 transition-colors"
+                className="p-1.5 rounded-md text-muted-foreground hover:text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
                 title="Refresh collection"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -227,7 +227,7 @@ export function DashboardClient({ username, avatarUrl, expectedTotal }: Dashboar
 
         {/* Navigation */}
         <nav className="flex-1 p-4">
-          <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3 px-2">
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-3 px-2">
             Navigation
           </p>
           <ul className="space-y-1">
@@ -237,8 +237,8 @@ export function DashboardClient({ username, avatarUrl, expectedTotal }: Dashboar
                   onClick={() => setActiveTab(item.id)}
                   className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                     activeTab === item.id
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                      ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                      : "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground"
                   }`}
                 >
                   <item.icon />
@@ -250,10 +250,10 @@ export function DashboardClient({ username, avatarUrl, expectedTotal }: Dashboar
         </nav>
 
         {/* Sign out */}
-        <div className="p-4 border-t border-gray-100">
+        <div className="p-4 border-t border-sidebar-border">
           <Button
             variant="ghost"
-            className="w-full justify-start gap-3 text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+            className="w-full justify-start gap-3 text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent"
             asChild
           >
             <Link href="/api/auth/logout">
@@ -267,14 +267,14 @@ export function DashboardClient({ username, avatarUrl, expectedTotal }: Dashboar
       {/* Main content */}
       <main className="flex-1 ml-64">
         {/* Header */}
-        <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
+        <header className="bg-card border-b border-border sticky top-0 z-10">
           <div className="px-8 py-6">
-            <h1 className="text-2xl font-semibold text-gray-900">
+            <h1 className="text-2xl font-semibold text-foreground">
               {activeTab === "dna" && "Collection DNA"}
               {activeTab === "compare" && "Compare Collections"}
               {activeTab === "discover" && "Discover New Music"}
             </h1>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               {activeTab === "dna" && "Analyze the patterns in your vinyl collection"}
               {activeTab === "compare" && "Find overlaps and trade opportunities with friends"}
               {activeTab === "discover" && "Get personalized recommendations based on your taste"}
@@ -335,7 +335,7 @@ export function DashboardClient({ username, avatarUrl, expectedTotal }: Dashboar
               {loading ? (
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {[...Array(3)].map((_, i) => (
-                    <Card key={i} className="bg-white">
+                    <Card key={i} className="bg-card">
                       <CardHeader>
                         <Skeleton className="h-5 w-32" />
                         <Skeleton className="h-4 w-48" />
@@ -349,9 +349,9 @@ export function DashboardClient({ username, avatarUrl, expectedTotal }: Dashboar
               ) : collection ? (
                 <DNACharts releases={collection.releases} />
               ) : (
-                <Card className="bg-white">
+                <Card className="bg-card">
                   <CardContent className="py-12 text-center">
-                    <p className="text-gray-500">
+                    <p className="text-muted-foreground">
                       No collection data available. Add some records on Discogs first!
                     </p>
                     <Button className="mt-4" asChild>
@@ -410,21 +410,21 @@ function StatCard({
   loading?: boolean;
 }) {
   return (
-    <Card className="bg-white">
+    <Card className="bg-card">
       <CardContent className="p-3">
         <div className="flex items-center gap-3">
           {icon && (
-            <div className="p-1.5 rounded-md bg-gray-100 text-gray-500 flex-shrink-0">
+            <div className="p-1.5 rounded-md bg-muted text-muted-foreground flex-shrink-0">
               {icon}
             </div>
           )}
           <div className="min-w-0 flex-1">
-            <p className="text-xs font-medium text-gray-500 truncate">{label}</p>
+            <p className="text-xs font-medium text-muted-foreground truncate">{label}</p>
             {loading ? (
               <Skeleton className="h-5 w-16 mt-0.5" />
             ) : (
               <div className="flex items-baseline gap-1.5">
-                <p className="text-lg font-semibold text-gray-900 truncate">{value}</p>
+                <p className="text-lg font-semibold text-foreground truncate">{value}</p>
                 {sublabel && (
                   <span className="text-xs text-primary flex-shrink-0">{sublabel}</span>
                 )}
