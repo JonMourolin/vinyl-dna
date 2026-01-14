@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import { Disc3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -350,9 +351,10 @@ export function DashboardClient({ username, avatarUrl, expectedTotal }: Dashboar
               {/* Stat Cards */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 <StatCard
-                  label="Total Releases"
+                  label="Total"
                   value={loading ? "-" : String(collection?.total || 0)}
                   loading={loading}
+                  icon={<Disc3 className="w-3 h-3" />}
                 />
                 <StatCard
                   label="Top Genre"
@@ -369,7 +371,7 @@ export function DashboardClient({ username, avatarUrl, expectedTotal }: Dashboar
                 <StatCard
                   label="Top Label"
                   value={loading ? "-" : stats?.topLabel || "N/A"}
-                  sublabel={stats?.topLabelCount ? `${stats.topLabelCount} releases` : undefined}
+                  sublabel={stats?.topLabelCount ? <>{stats.topLabelCount} <Disc3 className="w-3 h-3 inline" /></> : undefined}
                   loading={loading}
                 />
               </div>
@@ -444,16 +446,18 @@ function StatCard({
   value,
   sublabel,
   loading,
+  icon,
 }: {
   label: string;
   value: string;
-  sublabel?: string;
+  sublabel?: React.ReactNode;
   loading?: boolean;
+  icon?: React.ReactNode;
 }) {
   return (
     <div className="border border-border bg-gradient-to-br from-card to-card/50 rounded-lg px-3 py-1.5">
       <div className="flex items-center justify-between">
-        <p className="text-xs font-medium text-primary">{label}</p>
+        <p className="text-xs font-medium text-primary flex items-center gap-1">{label}{icon}</p>
         {sublabel && !loading && (
           <span className="text-xs font-medium text-primary bg-primary/10 px-1.5 py-0.5 rounded">
             {sublabel}
