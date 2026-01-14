@@ -5,6 +5,15 @@ All notable changes to DeepCogs will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.7] - 2026-01-14
+
+### Changed
+- **Compare View**: Replaced Trade Summary with Albums In Common section (scrollable list)
+- **Style Comparison**: Friend's color now teal green for better contrast with coral "You" color
+- **Velvet Scrollbar**: Custom scrollbar styling for scrollable sections
+
+---
+
 ## [0.6.6] - 2026-01-14
 
 ### Changed
@@ -204,6 +213,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.6.7 | 2026-01-14 | Albums In Common in Compare, teal friend color, velvet scrollbar |
 | 0.6.6 | 2026-01-14 | Velvet coral chart colors, cleaner tooltips, compact stat cards |
 | 0.6.5 | 2026-01-14 | Radar chart, area chart, stat card redesign, progress bar, tooltip |
 | 0.6.4 | 2026-01-14 | Velvet Dark Theme, semantic color tokens, CSS variable fix |
