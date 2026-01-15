@@ -12,7 +12,7 @@ const ShaderGradientBackground = dynamic(
     ssr: false,
     loading: () => (
       <div
-        className="absolute inset-0 bg-gradient-to-br from-[#803d2f] via-[#ca0043] to-[#212121]"
+        className="absolute inset-0 bg-gradient-to-br from-[#606080] via-[#ca1400] to-[#212121]"
         aria-hidden="true"
       />
     ),
