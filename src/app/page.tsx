@@ -21,26 +21,24 @@ const ShaderGradientBackground = dynamic(
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col lg:flex-row bg-background">
-      {/* LEFT PANEL - Visual/Brand (full bleed) */}
-      <div className="lg:w-1/2 min-h-[40vh] lg:min-h-screen relative overflow-hidden bg-black">
+    <main className="min-h-screen relative flex items-center justify-center p-6 md:p-10">
+      {/* Full-page shader background */}
+      <div className="absolute inset-0 overflow-hidden bg-black">
         <ShaderGradientBackground />
-        {/* Dark overlay for better contrast */}
-        <div className="absolute inset-0 bg-black/10 pointer-events-none" />
       </div>
 
-      {/* RIGHT PANEL - Login/Form */}
-      <div className="lg:w-1/2 min-h-[60vh] lg:min-h-screen flex flex-col justify-center items-center p-8 lg:p-16">
-        <div className="w-full max-w-sm text-center">
+      {/* Centered login card */}
+      <div className="relative z-10 w-full max-w-sm">
+        <div className="rounded-xl border border-white/10 bg-black/60 backdrop-blur-xl shadow-2xl p-8">
           {/* Heading */}
           <h1
-            className="text-3xl lg:text-4xl font-normal text-foreground mb-3"
+            className="text-2xl lg:text-3xl font-normal text-foreground mb-2 text-center"
             style={{ fontFamily: "var(--font-serif), Georgia, serif" }}
           >
             Connect your collection
           </h1>
 
-          <p className="text-muted-foreground mb-8">
+          <p className="text-sm text-muted-foreground mb-8 text-center">
             Sign in with your Discogs account to analyze your vinyl collection
             and discover your musical DNA.
           </p>
@@ -49,7 +47,7 @@ export default function Home() {
           <Button
             asChild
             size="lg"
-            className="w-full h-12 text-base font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200 shadow-sm hover:shadow-md"
+            className="w-full h-12 text-base font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200"
           >
             <a href="/api/auth/discogs" className="flex items-center justify-center gap-2">
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -63,17 +61,17 @@ export default function Home() {
 
           {/* Divider */}
           <div className="flex items-center gap-4 my-6">
-            <div className="flex-1 h-px bg-border" />
+            <div className="flex-1 h-px bg-white/10" />
             <span className="text-xs text-muted-foreground uppercase tracking-wide">Permissions</span>
-            <div className="flex-1 h-px bg-border" />
+            <div className="flex-1 h-px bg-white/10" />
           </div>
 
           {/* Permissions list */}
           <div className="space-y-3 mb-6">
             {["View your collection", "View your wantlist", "Read your profile info"].map(
               (permission) => (
-                <div key={permission} className="flex items-center justify-center gap-3">
-                  <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
+                <div key={permission} className="flex items-center gap-3">
+                  <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center">
                     <svg
                       className="w-3 h-3 text-primary"
                       fill="none"
@@ -93,38 +91,25 @@ export default function Home() {
               )
             )}
           </div>
+        </div>
 
-          {/* Create account link */}
-          <p className="text-sm text-muted-foreground">
-            Don&apos;t have a Discogs account?{" "}
+        {/* Footer outside card */}
+        <div className="mt-6 text-center">
+          <p className="text-xs text-white/50">
+            Your data stays private. We never modify your collection.
+          </p>
+          <p className="text-xs text-white/50 mt-1">
+            Data via{" "}
             <a
-              href="https://www.discogs.com/users/create"
+              href="https://discogs.com"
+              className="underline hover:text-white/70"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary hover:text-primary/80 underline underline-offset-2"
             >
-              Create one free
+              Discogs
             </a>
+            . Not affiliated.
           </p>
-
-          {/* Footer */}
-          <div className="mt-12 pt-6 border-t border-border">
-            <p className="text-xs text-muted-foreground">
-              Your data stays private. We never modify your collection.
-            </p>
-            <p className="text-xs text-muted-foreground mt-1">
-              Data via{" "}
-              <a
-                href="https://discogs.com"
-                className="underline hover:text-muted-foreground/80"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Discogs
-              </a>
-              . Not affiliated.
-            </p>
-          </div>
         </div>
       </div>
     </main>
