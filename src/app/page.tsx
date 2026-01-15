@@ -1,21 +1,32 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/button";
+
+const ShaderGradientBackground = dynamic(
+  () =>
+    import("@/components/shader-gradient-background").then(
+      (mod) => mod.ShaderGradientBackground
+    ),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        className="absolute inset-0 bg-gradient-to-br from-[#606080] via-[#ca1400] to-[#212121]"
+        aria-hidden="true"
+      />
+    ),
+  }
+);
 
 export default function Home() {
   return (
     <main className="min-h-screen flex flex-col lg:flex-row bg-background">
       {/* LEFT PANEL - Visual/Brand (full bleed) */}
-      <div
-        className="lg:w-1/2 min-h-[40vh] lg:min-h-screen relative overflow-hidden"
-        style={{
-          backgroundImage: `url('https://images.pexels.com/photos/2117243/pexels-photo-2117243.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
+      <div className="lg:w-1/2 min-h-[40vh] lg:min-h-screen relative overflow-hidden bg-black">
+        <ShaderGradientBackground />
         {/* Dark overlay for better contrast */}
-        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute inset-0 bg-black/10 pointer-events-none" />
       </div>
 
       {/* RIGHT PANEL - Login/Form */}
