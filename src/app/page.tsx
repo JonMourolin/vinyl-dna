@@ -91,19 +91,6 @@ export default function Home() {
               )
             )}
           </div>
-
-          {/* Create account link */}
-          <p className="text-sm text-muted-foreground text-center">
-            Don&apos;t have a Discogs account?{" "}
-            <a
-              href="https://www.discogs.com/users/create"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary hover:text-primary/80 underline underline-offset-2"
-            >
-              Create one free
-            </a>
-          </p>
         </div>
 
         {/* Footer outside card */}
