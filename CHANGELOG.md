@@ -5,6 +5,18 @@ All notable changes to DeepCogs will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0] - 2026-01-15
+
+### Changed
+- **Landing Page**: Redesigned with centered login card and glass-effect styling
+- **Background**: Replaced static Pexels image with animated ShaderGradient (waterPlane type)
+- **Layout**: Full-page shader background with backdrop blur card overlay
+
+### Removed
+- **Create Account Link**: Removed "Don't have a Discogs account?" text from landing page
+
+---
+
 ## [0.6.9] - 2026-01-14
 
 ### Added
