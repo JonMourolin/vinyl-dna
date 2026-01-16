@@ -5,6 +5,24 @@ All notable changes to DeepCogs will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.0] - 2026-01-16
+
+### Changed
+- **Fonts**: Replaced Space Grotesk with Google Sans Flex as primary font
+- **Branding**: New "deepcogs" display heading using Pinyon Script font
+- **Landing Page**: Simplified heading hierarchy, removed "Connect your collection" subtitle
+- **Dashboard**: Updated sidebar logo to match landing page branding with Pinyon Script
+- **Footer**: Transparent footer over landing page gradient, improved text visibility
+
+### Removed
+- **Unused Fonts**: Removed JetBrains Mono and Instrument Serif (now using system fallbacks)
+
+### Fixed
+- **Font Registration**: Properly registered Pinyon Script with Tailwind theme
+- **Header Alignment**: Dashboard sidebar and main header now have consistent height
+
+---
+
 ## [0.7.0] - 2026-01-15
 
 ### Changed
