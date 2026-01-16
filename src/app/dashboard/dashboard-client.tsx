@@ -197,21 +197,16 @@ export function DashboardClient({ username, avatarUrl, expectedTotal }: Dashboar
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
         {/* Logo + Mobile close button */}
-        <div className="p-6 border-b border-sidebar-border">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">D</span>
-              </div>
-              <span className="font-semibold text-lg text-sidebar-foreground">DeepCogs</span>
-            </Link>
-            <button
-              onClick={() => setSidebarOpen(false)}
-              className="lg:hidden p-1.5 rounded-md text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
-            >
-              <CloseIcon />
-            </button>
-          </div>
+        <div className="h-[85px] px-6 border-b border-sidebar-border relative flex items-center justify-center">
+          <Link href="/" className="block text-5xl font-display text-sidebar-foreground text-center">
+            deepcogs
+          </Link>
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="lg:hidden absolute right-4 top-1/2 -translate-y-1/2 p-1.5 rounded-md text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
+          >
+            <CloseIcon />
+          </button>
         </div>
 
         {/* User */}
@@ -301,8 +296,8 @@ export function DashboardClient({ username, avatarUrl, expectedTotal }: Dashboar
       {/* Main content */}
       <main className="flex-1 ml-0 lg:ml-64 min-w-0 overflow-hidden">
         {/* Header */}
-        <header className="bg-card border-b border-border sticky top-0 z-10">
-          <div className="px-4 md:px-8 py-4 md:py-6">
+        <header className="bg-card border-b border-border sticky top-0 z-10 h-[85px] flex items-center">
+          <div className="px-4 md:px-8">
             <div className="flex items-center gap-4">
               {/* Mobile hamburger menu */}
               <button
