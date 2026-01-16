@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import { Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -128,8 +129,9 @@ function ReleaseCard({
           </p>
           <div className="flex items-center gap-2 mt-1">
             {release.similarTo ? (
-              <span className="text-xs text-primary truncate">
-                Similar to {release.similarTo}
+              <span className="text-xs text-primary truncate flex items-center gap-1">
+                <Heart className="w-3 h-3 fill-primary" />
+                {release.similarTo}
               </span>
             ) : (
               <>
