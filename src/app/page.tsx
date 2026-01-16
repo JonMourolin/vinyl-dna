@@ -31,11 +31,14 @@ export default function Home() {
       <div className="relative z-10 w-full max-w-sm">
         <div className="rounded-xl border border-white/10 bg-black/60 backdrop-blur-xl shadow-2xl p-8">
           {/* Heading */}
-          <h1 className="text-2xl lg:text-3xl font-normal text-foreground mb-2 text-center">
-            Connect your collection
+          <h1
+            className="text-5xl lg:text-6xl font-normal text-foreground mb-8 text-center"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            deepcogs
           </h1>
 
-          <p className="text-sm text-muted-foreground mb-8 text-center">
+          <p className="text-xs text-muted-foreground mb-3 text-center">
             Sign in with your Discogs account to analyze your vinyl collection
             and discover your musical DNA.
           </p>
