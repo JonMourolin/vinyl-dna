@@ -164,7 +164,7 @@ export async function POST(request: NextRequest) {
               const masterId = r.master_id || r.id;
               return masterId && !ownedSet.has(masterId);
             })
-            .slice(0, 3)
+            .slice(0, 2)
             .map((r) => {
               const [artistName, ...titleParts] = (r.title || "").split(" - ");
               return {
