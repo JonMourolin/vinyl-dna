@@ -31,10 +31,7 @@ export default function Home() {
       <div className="relative z-10 w-full max-w-sm">
         <div className="rounded-xl border border-white/10 bg-black/60 backdrop-blur-xl shadow-2xl p-8">
           {/* Heading */}
-          <h1
-            className="text-5xl lg:text-6xl font-normal text-foreground mb-8 text-center"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
+          <h1 className="text-5xl lg:text-6xl font-normal text-foreground mb-8 text-center font-display">
             deepcogs
           </h1>
 
