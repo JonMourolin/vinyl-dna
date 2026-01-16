@@ -41,8 +41,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Fetch similar artists for each input artist (limit to 5 to avoid rate limits)
-    const artistsToQuery = artists.slice(0, 5);
+    // Fetch similar artists for each input artist (limit to 8 to allow backups)
+    const artistsToQuery = artists.slice(0, 8);
     const allSimilar: Array<{
       name: string;
       match: number;

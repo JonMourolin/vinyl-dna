@@ -342,6 +342,8 @@ export function createDiscogsClient(
       type?: string,
       options?: {
         format?: string;
+        style?: string;
+        genre?: string;
         sort?: "year" | "title" | "have" | "want";
         sort_order?: "asc" | "desc";
       }
@@ -349,6 +351,8 @@ export function createDiscogsClient(
       const params = new URLSearchParams({ q: query });
       if (type) params.append("type", type);
       if (options?.format) params.append("format", options.format);
+      if (options?.style) params.append("style", options.style);
+      if (options?.genre) params.append("genre", options.genre);
       if (options?.sort) params.append("sort", options.sort);
       if (options?.sort_order) params.append("sort_order", options.sort_order);
       return makeRequest(`/database/search?${params.toString()}`);
