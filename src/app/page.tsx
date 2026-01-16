@@ -47,7 +47,7 @@ export default function Home() {
           <Button
             asChild
             size="lg"
-            className="w-full h-12 text-base font-medium rounded-lg bg-[#ca1400] text-white hover:bg-[#b01200] transition-all duration-200"
+            className="w-full h-12 text-base font-medium rounded-lg bg-[#ca1400]/70 text-white hover:bg-[#ca1400]/85 backdrop-blur-sm transition-all duration-200"
           >
             <a href="/api/auth/discogs">
               Connect with Discogs
