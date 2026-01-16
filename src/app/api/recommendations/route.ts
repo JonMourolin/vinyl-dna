@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
     // Collect artists from top styles for Last.fm lookup
     const artistsForLastfm: string[] = [];
     topStyles.forEach((style) => {
-      artistsForLastfm.push(...style.artists.slice(0, 2));
+      artistsForLastfm.push(...style.artists.slice(0, 3));
     });
     const uniqueArtists = [...new Set(artistsForLastfm)].slice(0, 6);
 
@@ -129,7 +129,7 @@ export async function POST(request: NextRequest) {
     // For each style, search for releases by similar artists
     for (const style of topStyles) {
       const styleArtists = styleArtistMap.get(style.name) || [];
-      const basedOnArtists = style.artists.slice(0, 2);
+      const basedOnArtists = style.artists.slice(0, 3);
 
       const reason = styleArtists.length > 0
         ? `Based on ${basedOnArtists.join(", ")} in your collection`
