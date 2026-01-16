@@ -145,7 +145,7 @@ export async function POST(request: NextRequest) {
           const searchResult = await client.search(
             `${artist.name}`,
             "master",
-            { format: "Vinyl", sort: "want", sort_order: "desc" }
+            { format: "Vinyl", style: style.name, sort: "want", sort_order: "desc" }
           );
           const results = (searchResult as { results?: Array<{
             id: number;
