@@ -23,7 +23,7 @@ export default function Home() {
   return (
     <main className="min-h-screen relative flex items-center justify-center p-6 md:p-10">
       {/* Full-page shader background */}
-      <div className="absolute inset-0 overflow-hidden bg-black">
+      <div className="fixed inset-0 overflow-hidden bg-black">
         <ShaderGradientBackground />
       </div>
 
