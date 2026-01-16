@@ -5,6 +5,21 @@ All notable changes to DeepCogs will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.2] - 2026-01-16
+
+### Changed
+- **Recommendations**: Filter by style to avoid genre mismatches (no more Pink Floyd in Techno)
+- **Recommendations**: Use 5 artists per style (was 3) for backup coverage
+- **Recommendations**: Limit 2 tracks per source artist for even distribution
+- **Recommendations**: Fallback to direct Discogs search if no Last.fm similar artists found
+- **UI**: Heart icon replaces "Similar to X" text (now shows "❤️ Kerri Chandler")
+
+### Removed
+- Removed prd.md, roadmap.md, README.md from repo
+- Gitignored CLAUDE.md and .claude/ folder (keep local only)
+
+---
+
 ## [0.7.1] - 2026-01-16
 
 ### Changed
@@ -263,6 +278,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Date | Description |
 |---------|------|-------------|
+| 0.7.2 | 2026-01-16 | Recommendations style filter, backup artists, heart icon UI |
+| 0.7.1 | 2026-01-16 | Google Sans Flex font, Pinyon Script branding |
+| 0.7.0 | 2026-01-15 | ShaderGradient landing page, glass-effect login card |
 | 0.6.9 | 2026-01-14 | Footer, Disc3 icons, trade card hover fix, friend comparison color |
 | 0.6.8 | 2026-01-14 | Mobile style badges wrap, oddities stat boxes |
 | 0.6.7 | 2026-01-14 | Albums In Common in Compare, teal friend color, velvet scrollbar |
