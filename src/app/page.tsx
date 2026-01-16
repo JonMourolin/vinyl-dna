@@ -47,14 +47,9 @@ export default function Home() {
           <Button
             asChild
             size="lg"
-            className="w-full h-12 text-base font-medium rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-200"
+            className="w-full h-12 text-base font-medium rounded-lg bg-[#ca1400] text-white hover:bg-[#b01200] transition-all duration-200"
           >
-            <a href="/api/auth/discogs" className="flex items-center justify-center gap-2">
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2" />
-                <circle cx="12" cy="12" r="3" />
-                <circle cx="12" cy="12" r="6" fill="none" stroke="currentColor" strokeWidth="1" opacity="0.5" />
-              </svg>
+            <a href="/api/auth/discogs">
               Connect with Discogs
             </a>
           </Button>
@@ -95,14 +90,14 @@ export default function Home() {
 
         {/* Footer outside card */}
         <div className="mt-6 text-center">
-          <p className="text-xs text-white/50">
+          <p className="text-xs text-white/80">
             Your data stays private. We never modify your collection.
           </p>
-          <p className="text-xs text-white/50 mt-1">
+          <p className="text-xs text-white/80 mt-1">
             Data via{" "}
             <a
               href="https://discogs.com"
-              className="underline hover:text-white/70"
+              className="underline hover:text-white"
               target="_blank"
               rel="noopener noreferrer"
             >
