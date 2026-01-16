@@ -1,7 +1,24 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import dynamic from "next/dynamic";
 import { Disc3 } from "lucide-react";
+
+const ShaderGradientBackground = dynamic(
+  () =>
+    import("@/components/shader-gradient-background").then(
+      (mod) => mod.ShaderGradientBackground
+    ),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        className="absolute inset-0 bg-gradient-to-br from-[#606080] via-[#ca1400] to-[#212121]"
+        aria-hidden="true"
+      />
+    ),
+  }
+);
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -197,13 +214,18 @@ export function DashboardClient({ username, avatarUrl, expectedTotal }: Dashboar
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
         {/* Logo + Mobile close button */}
-        <div className="h-[85px] px-6 border-b border-sidebar-border relative flex items-center justify-center">
-          <Link href="/" className="block text-5xl font-display text-sidebar-foreground text-center">
+        <div className="h-[85px] border-b border-sidebar-border relative flex items-center justify-center overflow-hidden">
+          {/* Shader background */}
+          <div className="absolute inset-0">
+            <ShaderGradientBackground />
+          </div>
+          {/* Content */}
+          <Link href="/" className="relative z-10 block text-5xl font-display font-bold text-white text-center">
             deepcogs
           </Link>
           <button
             onClick={() => setSidebarOpen(false)}
-            className="lg:hidden absolute right-4 top-1/2 -translate-y-1/2 p-1.5 rounded-md text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
+            className="lg:hidden absolute z-10 right-4 top-1/2 -translate-y-1/2 p-1.5 rounded-md text-white/70 hover:text-white hover:bg-white/10 transition-colors"
           >
             <CloseIcon />
           </button>
