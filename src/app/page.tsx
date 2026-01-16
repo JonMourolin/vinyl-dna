@@ -31,10 +31,7 @@ export default function Home() {
       <div className="relative z-10 w-full max-w-sm">
         <div className="rounded-xl border border-white/10 bg-black/60 backdrop-blur-xl shadow-2xl p-8">
           {/* Heading */}
-          <h1
-            className="text-2xl lg:text-3xl font-normal text-foreground mb-2 text-center"
-            style={{ fontFamily: "var(--font-serif), Georgia, serif" }}
-          >
+          <h1 className="text-2xl lg:text-3xl font-normal text-foreground mb-2 text-center">
             Connect your collection
           </h1>
 
