@@ -54,7 +54,7 @@ export default function RootLayout({
         className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} font-sans antialiased min-h-screen flex flex-col`}
       >
         <main className="flex-1">{children}</main>
-        <footer className="py-6 px-6 text-right text-xs text-neutral-500">
+        <footer className="relative z-10 py-6 px-6 text-right text-xs text-white/60">
           Copyright © 2025 Deepcogs - All rights reserved
         </footer>
       </body>
